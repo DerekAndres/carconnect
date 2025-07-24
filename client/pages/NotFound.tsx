@@ -15,23 +15,9 @@ const NotFound = () => {
   return (
     <div className="min-h-screen bg-white">
       {/* Navigation */}
-      <nav className="bg-gray-900 text-white px-4 md:px-8 lg:px-16 py-6">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center space-x-8">
-            <Link to="/" className="text-2xl font-bold">car connect</Link>
-          </div>
-          
-          <div className="hidden lg:flex items-center space-x-8 text-lg">
-            <Link to="/" className="hover:text-blue-400 transition-colors">Inicio</Link>
-            <Link to="/catalog" className="hover:text-blue-400 transition-colors">Catalogo</Link>
-            <Link to="#" className="hover:text-blue-400 transition-colors">Avaluo de tu Auto</Link>
-            <Link to="#" className="hover:text-blue-400 transition-colors">Agendar Cita</Link>
-            <Link to="#" className="hover:text-blue-400 transition-colors">Sobre nosotros</Link>
-            <Link to="#" className="hover:text-blue-400 transition-colors">Financiamiento</Link>
-            <Link to="#" className="hover:text-blue-400 transition-colors">Contactanos</Link>
-          </div>
-        </div>
-      </nav>
+      <div className="bg-gray-900">
+        <Navbar />
+      </div>
 
       {/* 404 Content */}
       <div className="flex flex-col items-center justify-center min-h-[80vh] px-4">
