@@ -1,71 +1,78 @@
-import React, { useState } from 'react';
-import { X } from 'lucide-react';
-import { Vehicle } from '@shared/vehicles';
+import React, { useState } from "react";
+import { X } from "lucide-react";
+import { Vehicle } from "@shared/vehicles";
 
 interface AddVehicleModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onAddVehicle: (vehicle: Omit<Vehicle, 'id'>) => void;
+  onAddVehicle: (vehicle: Omit<Vehicle, "id">) => void;
 }
 
 const AddVehicleModal: React.FC<AddVehicleModalProps> = ({
   isOpen,
   onClose,
-  onAddVehicle
+  onAddVehicle,
 }) => {
-  const [formData, setFormData] = useState<Omit<Vehicle, 'id'>>({
-    make: '',
-    model: '',
+  const [formData, setFormData] = useState<Omit<Vehicle, "id">>({
+    make: "",
+    model: "",
     year: new Date().getFullYear(),
     price: 0,
     mileage: 0,
-    fuelType: 'Gasolina',
-    transmission: 'Automatico',
-    description: '',
-    image: '',
+    fuelType: "Gasolina",
+    transmission: "Automatico",
+    description: "",
+    image: "",
     features: [],
     isVisible: true,
-    condition: 'Usado',
-    priceType: 'Contado'
+    condition: "Usado",
+    priceType: "Contado",
   });
 
-  const [features, setFeatures] = useState<string>('');
+  const [features, setFeatures] = useState<string>("");
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     const vehicleData = {
       ...formData,
-      features: features.split(',').map(f => f.trim()).filter(f => f.length > 0)
+      features: features
+        .split(",")
+        .map((f) => f.trim())
+        .filter((f) => f.length > 0),
     };
-    
+
     onAddVehicle(vehicleData);
-    
+
     // Reset form
     setFormData({
-      make: '',
-      model: '',
+      make: "",
+      model: "",
       year: new Date().getFullYear(),
       price: 0,
       mileage: 0,
-      fuelType: 'Gasolina',
-      transmission: 'Automatico',
-      description: '',
-      image: '',
+      fuelType: "Gasolina",
+      transmission: "Automatico",
+      description: "",
+      image: "",
       features: [],
       isVisible: true,
-      condition: 'Usado',
-      priceType: 'Contado'
+      condition: "Usado",
+      priceType: "Contado",
     });
-    setFeatures('');
+    setFeatures("");
     onClose();
   };
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+  const handleInputChange = (
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
+    >,
+  ) => {
     const { name, value, type } = e.target;
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [name]: type === 'number' ? parseFloat(value) || 0 : value
+      [name]: type === "number" ? parseFloat(value) || 0 : value,
     }));
   };
 
@@ -76,7 +83,9 @@ const AddVehicleModal: React.FC<AddVehicleModalProps> = ({
       <div className="bg-white rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
         {/* Header */}
         <div className="flex items-center justify-between p-6 border-b">
-          <h2 className="text-2xl font-bold text-gray-900">Agregar Nuevo Vehículo</h2>
+          <h2 className="text-2xl font-bold text-gray-900">
+            Agregar Nuevo Vehículo
+          </h2>
           <button
             onClick={onClose}
             className="text-gray-400 hover:text-gray-600 transition-colors"
@@ -103,7 +112,7 @@ const AddVehicleModal: React.FC<AddVehicleModalProps> = ({
                 placeholder="Toyota, Honda, Mercedes..."
               />
             </div>
-            
+
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
                 Modelo *
@@ -136,7 +145,7 @@ const AddVehicleModal: React.FC<AddVehicleModalProps> = ({
                 className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
             </div>
-            
+
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
                 Precio (L.) *
@@ -153,7 +162,7 @@ const AddVehicleModal: React.FC<AddVehicleModalProps> = ({
                 placeholder="150000"
               />
             </div>
-            
+
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
                 Kilometraje
@@ -187,7 +196,7 @@ const AddVehicleModal: React.FC<AddVehicleModalProps> = ({
                 <option value="Eléctrico">Eléctrico</option>
               </select>
             </div>
-            
+
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
                 Transmisión
@@ -202,7 +211,7 @@ const AddVehicleModal: React.FC<AddVehicleModalProps> = ({
                 <option value="Mecanico">Mecánico</option>
               </select>
             </div>
-            
+
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
                 Condición

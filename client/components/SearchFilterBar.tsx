@@ -1,19 +1,21 @@
-import { Search, ChevronDown } from 'lucide-react';
-import { useState } from 'react';
-import { useVehicles } from '../context/VehicleContext';
+import { Search, ChevronDown } from "lucide-react";
+import { useState } from "react";
+import { useVehicles } from "../context/VehicleContext";
 
 interface SearchFilterBarProps {
   className?: string;
 }
 
-const SearchFilterBar: React.FC<SearchFilterBarProps> = ({ className = '' }) => {
+const SearchFilterBar: React.FC<SearchFilterBarProps> = ({
+  className = "",
+}) => {
   const { filters, setFilters } = useVehicles();
   const [localFilters, setLocalFilters] = useState({
-    marca: '',
-    modelo: '',
-    año: '',
-    precio: '',
-    estado: ''
+    marca: "",
+    modelo: "",
+    año: "",
+    precio: "",
+    estado: "",
   });
 
   const handleSearch = () => {
@@ -23,13 +25,17 @@ const SearchFilterBar: React.FC<SearchFilterBarProps> = ({ className = '' }) => 
       model: localFilters.modelo || undefined,
       year: localFilters.año ? parseInt(localFilters.año) : undefined,
       condition: localFilters.estado || undefined,
-      priceRange: localFilters.precio ? [0, parseInt(localFilters.precio)] as [number, number] : undefined
+      priceRange: localFilters.precio
+        ? ([0, parseInt(localFilters.precio)] as [number, number])
+        : undefined,
     };
     setFilters(newFilters);
   };
 
   return (
-    <div className={`bg-white/10 backdrop-blur-sm rounded-full border-2 border-white p-2 flex items-center justify-between ${className}`}>
+    <div
+      className={`bg-white/10 backdrop-blur-sm rounded-full border-2 border-white p-2 flex items-center justify-between ${className}`}
+    >
       <div className="flex items-center space-x-8 px-6">
         <div className="flex items-center space-x-2">
           <span className="text-white text-lg">Marca</span>
@@ -56,7 +62,7 @@ const SearchFilterBar: React.FC<SearchFilterBarProps> = ({ className = '' }) => 
           <ChevronDown className="text-black w-5 h-5" />
         </div>
       </div>
-      <button 
+      <button
         onClick={handleSearch}
         className="flex items-center space-x-2 bg-white/20 rounded-full px-6 py-3 hover:bg-white/30 transition-colors"
       >

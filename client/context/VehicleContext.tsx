@@ -1,5 +1,5 @@
-import React, { createContext, useContext, useState, ReactNode } from 'react';
-import { Vehicle, VehicleFilters, mockVehicles } from '@shared/vehicles';
+import React, { createContext, useContext, useState, ReactNode } from "react";
+import { Vehicle, VehicleFilters, mockVehicles } from "@shared/vehicles";
 
 interface VehicleContextType {
   vehicles: Vehicle[];
@@ -9,7 +9,7 @@ interface VehicleContextType {
   filteredVehicles: Vehicle[];
   updateVehicleVisibility: (vehicleId: string, isVisible: boolean) => void;
   toggleAllVehiclesVisibility: (isVisible: boolean) => void;
-  addVehicle: (vehicle: Omit<Vehicle, 'id'>) => void;
+  addVehicle: (vehicle: Omit<Vehicle, "id">) => void;
 }
 
 const VehicleContext = createContext<VehicleContextType | undefined>(undefined);
@@ -17,7 +17,7 @@ const VehicleContext = createContext<VehicleContextType | undefined>(undefined);
 export const useVehicles = () => {
   const context = useContext(VehicleContext);
   if (!context) {
-    throw new Error('useVehicles must be used within a VehicleProvider');
+    throw new Error("useVehicles must be used within a VehicleProvider");
   }
   return context;
 };
@@ -26,16 +26,24 @@ interface VehicleProviderProps {
   children: ReactNode;
 }
 
-export const VehicleProvider: React.FC<VehicleProviderProps> = ({ children }) => {
+export const VehicleProvider: React.FC<VehicleProviderProps> = ({
+  children,
+}) => {
   const [vehicles, setVehicles] = useState<Vehicle[]>(mockVehicles);
   const [filters, setFilters] = useState<VehicleFilters>({});
 
   // Filter vehicles based on current filters
-  const filteredVehicles = vehicles.filter(vehicle => {
-    if (filters.make && vehicle.make.toLowerCase() !== filters.make.toLowerCase()) {
+  const filteredVehicles = vehicles.filter((vehicle) => {
+    if (
+      filters.make &&
+      vehicle.make.toLowerCase() !== filters.make.toLowerCase()
+    ) {
       return false;
     }
-    if (filters.model && vehicle.model.toLowerCase() !== filters.model.toLowerCase()) {
+    if (
+      filters.model &&
+      vehicle.model.toLowerCase() !== filters.model.toLowerCase()
+    ) {
       return false;
     }
     if (filters.year && vehicle.year !== filters.year) {
@@ -54,26 +62,28 @@ export const VehicleProvider: React.FC<VehicleProviderProps> = ({ children }) =>
   });
 
   const updateVehicleVisibility = (vehicleId: string, isVisible: boolean) => {
-    setVehicles(prev => prev.map(vehicle => 
-      vehicle.id === vehicleId 
-        ? { ...vehicle, isVisible }
-        : vehicle
-    ));
+    setVehicles((prev) =>
+      prev.map((vehicle) =>
+        vehicle.id === vehicleId ? { ...vehicle, isVisible } : vehicle,
+      ),
+    );
   };
 
   const toggleAllVehiclesVisibility = (isVisible: boolean) => {
-    setVehicles(prev => prev.map(vehicle => ({
-      ...vehicle,
-      isVisible
-    })));
+    setVehicles((prev) =>
+      prev.map((vehicle) => ({
+        ...vehicle,
+        isVisible,
+      })),
+    );
   };
 
-  const addVehicle = (vehicleData: Omit<Vehicle, 'id'>) => {
+  const addVehicle = (vehicleData: Omit<Vehicle, "id">) => {
     const newVehicle: Vehicle = {
       ...vehicleData,
-      id: Date.now().toString() // Simple ID generation
+      id: Date.now().toString(), // Simple ID generation
     };
-    setVehicles(prev => [...prev, newVehicle]);
+    setVehicles((prev) => [...prev, newVehicle]);
   };
 
   const value: VehicleContextType = {
@@ -84,12 +94,10 @@ export const VehicleProvider: React.FC<VehicleProviderProps> = ({ children }) =>
     filteredVehicles,
     updateVehicleVisibility,
     toggleAllVehiclesVisibility,
-    addVehicle
+    addVehicle,
   };
 
   return (
-    <VehicleContext.Provider value={value}>
-      {children}
-    </VehicleContext.Provider>
+    <VehicleContext.Provider value={value}>{children}</VehicleContext.Provider>
   );
 };
