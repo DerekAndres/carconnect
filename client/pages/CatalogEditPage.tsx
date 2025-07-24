@@ -4,10 +4,12 @@ import { useState } from 'react';
 import { useVehicles } from '../context/VehicleContext';
 import SearchFilterBar from '../components/SearchFilterBar';
 import Navbar from '../components/Navbar';
+import AddVehicleModal from '../components/AddVehicleModal';
 
 const CatalogEditPage = () => {
-  const { vehicles, updateVehicleVisibility, toggleAllVehiclesVisibility } = useVehicles();
+  const { vehicles, updateVehicleVisibility, toggleAllVehiclesVisibility, addVehicle } = useVehicles();
   const [selectAll, setSelectAll] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const toggleVehicleVisibility = (vehicleId: string) => {
     const vehicle = vehicles.find(v => v.id === vehicleId);
@@ -50,7 +52,10 @@ const CatalogEditPage = () => {
         <div className="max-w-7xl mx-auto">
           <div className="flex items-center justify-between mb-6">
             <div className="flex items-center space-x-6">
-              <button className="bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700 transition-colors flex items-center space-x-2 font-medium">
+              <button
+                onClick={() => setIsModalOpen(true)}
+                className="bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700 transition-colors flex items-center space-x-2 font-medium"
+              >
                 <Plus className="w-5 h-5" />
                 <span>Agregar Vehículo</span>
               </button>
@@ -205,6 +210,13 @@ const CatalogEditPage = () => {
           <p className="text-lg">car connect by Mimo's Autos</p>
         </div>
       </footer>
+
+      {/* Add Vehicle Modal */}
+      <AddVehicleModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        onAddVehicle={addVehicle}
+      />
     </div>
   );
 };
