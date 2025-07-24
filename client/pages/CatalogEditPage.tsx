@@ -91,18 +91,24 @@ const CatalogEditPage = () => {
               <div key={vehicle.id} className="bg-white rounded-lg shadow-lg overflow-hidden group hover:shadow-xl transition-shadow relative">
                 {/* Checkbox for visibility */}
                 <div className="absolute top-4 left-4 z-20">
-                  <button
-                    onClick={() => toggleVehicleVisibility(vehicle.id)}
-                    className={`w-10 h-10 rounded-full flex items-center justify-center ${vehicle.isVisible ? 'bg-green-500 text-white' : 'bg-gray-300 text-gray-600'} transition-colors`}
-                  >
-                    {vehicle.isVisible ? (
-                      <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
-                        <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                      </svg>
-                    ) : (
-                      <span className="text-xs">✗</span>
-                    )}
-                  </button>
+                  <div className="bg-white rounded-lg shadow-md p-2">
+                    <button
+                      onClick={() => toggleVehicleVisibility(vehicle.id)}
+                      className={`flex items-center space-x-2 text-sm font-medium ${vehicle.isVisible ? 'text-green-600' : 'text-gray-600'}`}
+                      title={vehicle.isVisible ? 'Visible en catálogo principal' : 'Oculto del catálogo principal'}
+                    >
+                      <div className={`w-5 h-5 rounded border-2 flex items-center justify-center ${vehicle.isVisible ? 'bg-green-500 border-green-500' : 'border-gray-300'}`}>
+                        {vehicle.isVisible && (
+                          <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
+                            <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                          </svg>
+                        )}
+                      </div>
+                      <span className="whitespace-nowrap">
+                        {vehicle.isVisible ? 'Mostrar' : 'Ocultar'}
+                      </span>
+                    </button>
+                  </div>
                 </div>
                 
                 <div className="relative">
