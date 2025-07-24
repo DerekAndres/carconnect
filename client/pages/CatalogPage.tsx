@@ -3,6 +3,7 @@ import { Search, ChevronDown, User } from 'lucide-react';
 import { useState } from 'react';
 import { useVehicles } from '../context/VehicleContext';
 import SearchFilterBar from '../components/SearchFilterBar';
+import Navbar from '../components/Navbar';
 
 const CatalogPage = () => {
   const { vehicles } = useVehicles();
