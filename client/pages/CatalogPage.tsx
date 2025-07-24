@@ -77,7 +77,7 @@ const CatalogPage = () => {
 
           {/* Vehicle Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {vehicles.slice(0, showingCount).map((vehicle) => (
+            {visibleVehicles.slice(0, showingCount).map((vehicle) => (
               <div key={vehicle.id} className="bg-white rounded-lg shadow-lg overflow-hidden group hover:shadow-xl transition-shadow relative">
                 <div className="absolute top-4 left-4 bg-green-500 text-white w-10 h-10 rounded-full flex items-center justify-center z-10">
                   <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
