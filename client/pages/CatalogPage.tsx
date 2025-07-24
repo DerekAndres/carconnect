@@ -1,14 +1,16 @@
 import { Link } from 'react-router-dom';
 import { Search, ChevronDown, User } from 'lucide-react';
-import { useState, useEffect } from 'react';
-import { mockVehicles, Vehicle } from '@shared/vehicles';
+import { useState } from 'react';
+import { useVehicles } from '../context/VehicleContext';
+import SearchFilterBar from '../components/SearchFilterBar';
 
 const CatalogPage = () => {
-  const [vehicles, setVehicles] = useState<Vehicle[]>(mockVehicles.filter(v => v.isVisible));
+  const { vehicles } = useVehicles();
+  const visibleVehicles = vehicles.filter(v => v.isVisible);
   const [showingCount, setShowingCount] = useState(8);
 
   const loadMore = () => {
-    setShowingCount(prev => Math.min(prev + 4, vehicles.length));
+    setShowingCount(prev => Math.min(prev + 4, visibleVehicles.length));
   };
 
   return (
