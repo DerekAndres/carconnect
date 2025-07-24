@@ -1,27 +1,24 @@
 import { Link } from 'react-router-dom';
 import { Search, ChevronDown, User, Edit2 } from 'lucide-react';
 import { useState } from 'react';
-import { mockVehicles, Vehicle } from '@shared/vehicles';
+import { useVehicles } from '../context/VehicleContext';
+import SearchFilterBar from '../components/SearchFilterBar';
 
 const CatalogEditPage = () => {
-  const [vehicles, setVehicles] = useState<Vehicle[]>(mockVehicles);
+  const { vehicles, updateVehicleVisibility, toggleAllVehiclesVisibility } = useVehicles();
   const [selectAll, setSelectAll] = useState(false);
 
   const toggleVehicleVisibility = (vehicleId: string) => {
-    setVehicles(prev => prev.map(vehicle => 
-      vehicle.id === vehicleId 
-        ? { ...vehicle, isVisible: !vehicle.isVisible }
-        : vehicle
-    ));
+    const vehicle = vehicles.find(v => v.id === vehicleId);
+    if (vehicle) {
+      updateVehicleVisibility(vehicleId, !vehicle.isVisible);
+    }
   };
 
   const toggleSelectAll = () => {
     const newValue = !selectAll;
     setSelectAll(newValue);
-    setVehicles(prev => prev.map(vehicle => ({
-      ...vehicle,
-      isVisible: newValue
-    })));
+    toggleAllVehiclesVisibility(newValue);
   };
 
   const visibleCount = vehicles.filter(v => v.isVisible).length;
