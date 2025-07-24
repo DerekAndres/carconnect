@@ -6,12 +6,16 @@ import SearchFilterBar from '../components/SearchFilterBar';
 import Navbar from '../components/Navbar';
 
 const CatalogPage = () => {
-  const { vehicles } = useVehicles();
+  const { vehicles, updateVehicleVisibility } = useVehicles();
   const visibleVehicles = vehicles.filter(v => v.isVisible);
   const [showingCount, setShowingCount] = useState(8);
 
   const loadMore = () => {
     setShowingCount(prev => Math.min(prev + 4, visibleVehicles.length));
+  };
+
+  const handleVehicleClick = (vehicleId: string) => {
+    updateVehicleVisibility(vehicleId, false);
   };
 
   return (
@@ -143,7 +147,7 @@ const CatalogPage = () => {
           </div>
           
           <div className="flex justify-center space-x-6 mb-8">
-            <a href="#" className="text-2xl hover:text-blue-400 transition-colors">���</a>
+            <a href="#" className="text-2xl hover:text-blue-400 transition-colors">📘</a>
             <a href="#" className="text-2xl hover:text-blue-400 transition-colors">📱</a>
             <a href="#" className="text-2xl hover:text-blue-400 transition-colors">🐦</a>
           </div>
