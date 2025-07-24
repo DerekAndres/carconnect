@@ -13,6 +13,9 @@ const CatalogEditPage = () => {
     const vehicle = vehicles.find(v => v.id === vehicleId);
     if (vehicle) {
       updateVehicleVisibility(vehicleId, !vehicle.isVisible);
+      // Update selectAll state if needed
+      const newVisibleCount = vehicles.filter(v => v.id === vehicleId ? !vehicle.isVisible : v.isVisible).length;
+      setSelectAll(newVisibleCount === vehicles.length);
     }
   };
 
