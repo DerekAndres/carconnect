@@ -57,8 +57,24 @@ const CatalogPage = () => {
           </div>
 
           {/* Vehicle Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {visibleVehicles.slice(0, showingCount).map((vehicle) => (
+          {visibleVehicles.length === 0 ? (
+            <div className="text-center py-16">
+              <div className="bg-gray-100 rounded-lg p-8 max-w-md mx-auto">
+                <h3 className="text-xl font-semibold mb-2">No hay vehículos disponibles</h3>
+                <p className="text-gray-600 mb-4">
+                  No hay vehículos marcados como visibles en el catálogo.
+                </p>
+                <Link
+                  to="/catalog/edit"
+                  className="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 transition-colors inline-flex items-center space-x-2"
+                >
+                  <span>Ir a Editar Catálogo</span>
+                </Link>
+              </div>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+              {visibleVehicles.slice(0, showingCount).map((vehicle) => (
               <div key={vehicle.id} className="bg-white rounded-lg shadow-lg overflow-hidden group hover:shadow-xl transition-shadow relative">
                 <div className="absolute top-4 left-4 bg-green-500 text-white w-10 h-10 rounded-full flex items-center justify-center z-10">
                   <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
@@ -111,8 +127,9 @@ const CatalogPage = () => {
                   </div>
                 </div>
               </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          )}
 
           {/* Load More Button */}
           {showingCount < visibleVehicles.length && (
