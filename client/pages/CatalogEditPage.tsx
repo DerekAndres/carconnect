@@ -45,8 +45,12 @@ const CatalogEditPage = () => {
       {/* Edit Controls */}
       <section className="py-8 px-4 md:px-8 lg:px-16 bg-gray-50">
         <div className="max-w-7xl mx-auto">
-          <div className="flex items-center justify-between">
+          <div className="flex items-center justify-between mb-6">
             <div className="flex items-center space-x-6">
+              <button className="bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700 transition-colors flex items-center space-x-2 font-medium">
+                <Plus className="w-5 h-5" />
+                <span>Agregar Vehículo</span>
+              </button>
               <button
                 onClick={toggleSelectAll}
                 className="flex items-center space-x-2 text-blue-600 hover:text-blue-800 font-medium"
@@ -65,8 +69,8 @@ const CatalogEditPage = () => {
               </span>
             </div>
             <div className="flex items-center space-x-4">
-              <Link 
-                to="/catalog" 
+              <Link
+                to="/catalog"
                 className="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 transition-colors"
               >
                 Ver Catálogo
