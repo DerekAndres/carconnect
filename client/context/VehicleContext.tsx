@@ -68,6 +68,14 @@ export const VehicleProvider: React.FC<VehicleProviderProps> = ({ children }) =>
     })));
   };
 
+  const addVehicle = (vehicleData: Omit<Vehicle, 'id'>) => {
+    const newVehicle: Vehicle = {
+      ...vehicleData,
+      id: Date.now().toString() // Simple ID generation
+    };
+    setVehicles(prev => [...prev, newVehicle]);
+  };
+
   const value: VehicleContextType = {
     vehicles,
     setVehicles,
@@ -75,7 +83,8 @@ export const VehicleProvider: React.FC<VehicleProviderProps> = ({ children }) =>
     setFilters,
     filteredVehicles,
     updateVehicleVisibility,
-    toggleAllVehiclesVisibility
+    toggleAllVehiclesVisibility,
+    addVehicle
   };
 
   return (
