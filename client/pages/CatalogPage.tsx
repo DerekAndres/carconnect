@@ -6,16 +6,12 @@ import SearchFilterBar from '../components/SearchFilterBar';
 import Navbar from '../components/Navbar';
 
 const CatalogPage = () => {
-  const { vehicles, updateVehicleVisibility } = useVehicles();
+  const { vehicles } = useVehicles();
   const visibleVehicles = vehicles.filter(v => v.isVisible);
   const [showingCount, setShowingCount] = useState(8);
 
   const loadMore = () => {
     setShowingCount(prev => Math.min(prev + 4, visibleVehicles.length));
-  };
-
-  const handleVehicleClick = (vehicleId: string) => {
-    updateVehicleVisibility(vehicleId, false);
   };
 
   return (
@@ -65,8 +61,7 @@ const CatalogPage = () => {
               {visibleVehicles.slice(0, showingCount).map((vehicle) => (
               <div
                 key={vehicle.id}
-                className="bg-white rounded-lg shadow-lg overflow-hidden group hover:shadow-xl transition-shadow relative cursor-pointer"
-                onClick={() => handleVehicleClick(vehicle.id)}
+                className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow"
               >
                 <div className="relative">
                   <img
@@ -74,11 +69,6 @@ const CatalogPage = () => {
                     alt={`${vehicle.make} ${vehicle.model}`}
                     className="w-full h-48 object-cover"
                   />
-                  <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-10 transition-all duration-200 flex items-center justify-center">
-                    <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-200 bg-red-600 text-white px-4 py-2 rounded-full text-sm font-medium">
-                      Clic para ocultar
-                    </div>
-                  </div>
                 </div>
                 
                 <div className="p-6">
@@ -107,7 +97,7 @@ const CatalogPage = () => {
                   <div className="flex items-center justify-between">
                     <span className="text-green-600 text-xl font-bold">L. 150,000</span>
                     <button className="text-blue-600 hover:text-blue-800 font-medium">
-                      view details
+                      Ver detalles
                     </button>
                   </div>
                 </div>
