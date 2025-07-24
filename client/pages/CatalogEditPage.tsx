@@ -1,8 +1,9 @@
 import { Link } from 'react-router-dom';
-import { Search, ChevronDown, User, Edit2 } from 'lucide-react';
+import { Search, ChevronDown, User, Edit2, Plus } from 'lucide-react';
 import { useState } from 'react';
 import { useVehicles } from '../context/VehicleContext';
 import SearchFilterBar from '../components/SearchFilterBar';
+import Navbar from '../components/Navbar';
 
 const CatalogEditPage = () => {
   const { vehicles, updateVehicleVisibility, toggleAllVehiclesVisibility } = useVehicles();
