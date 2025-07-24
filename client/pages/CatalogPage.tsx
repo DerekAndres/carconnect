@@ -63,24 +63,21 @@ const CatalogPage = () => {
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
               {visibleVehicles.slice(0, showingCount).map((vehicle) => (
-              <div key={vehicle.id} className="bg-white rounded-lg shadow-lg overflow-hidden group hover:shadow-xl transition-shadow relative">
-                <div className="absolute top-4 left-4 bg-green-500 text-white w-10 h-10 rounded-full flex items-center justify-center z-10">
-                  <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                  </svg>
-                </div>
-                
+              <div
+                key={vehicle.id}
+                className="bg-white rounded-lg shadow-lg overflow-hidden group hover:shadow-xl transition-shadow relative cursor-pointer"
+                onClick={() => handleVehicleClick(vehicle.id)}
+              >
                 <div className="relative">
-                  <img 
-                    src={vehicle.image} 
-                    alt={`${vehicle.make} ${vehicle.model}`} 
+                  <img
+                    src={vehicle.image}
+                    alt={`${vehicle.make} ${vehicle.model}`}
                     className="w-full h-48 object-cover"
                   />
-                  <div className="absolute top-2 left-2 bg-white/80 backdrop-blur-sm rounded p-2">
-                    <ChevronDown className="w-5 h-5 text-gray-600" />
-                  </div>
-                  <div className="absolute top-2 right-2 bg-white/80 backdrop-blur-sm rounded p-2">
-                    <ChevronDown className="w-5 h-5 text-gray-600" />
+                  <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-10 transition-all duration-200 flex items-center justify-center">
+                    <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-200 bg-red-600 text-white px-4 py-2 rounded-full text-sm font-medium">
+                      Clic para ocultar
+                    </div>
                   </div>
                 </div>
                 
