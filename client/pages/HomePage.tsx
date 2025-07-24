@@ -101,8 +101,14 @@ const HomePage = () => {
             <Link to="#" className="hover:text-blue-400 transition-colors">Contactanos</Link>
           </div>
 
-          <div className="flex items-center text-xl font-medium">
-            <span className="text-2xl md:text-4xl">car connect</span>
+          <div className="flex items-center space-x-4">
+            <span className="text-2xl md:text-4xl font-medium">car connect</span>
+            <button
+              className="xl:hidden"
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            >
+              {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            </button>
           </div>
         </nav>
 
