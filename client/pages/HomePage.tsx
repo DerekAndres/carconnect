@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { Search, ChevronDown, ChevronLeft, ChevronRight, Menu, X } from 'lucide-react';
 import { useState } from 'react';
+import Navbar from '../components/Navbar';
 
 const HomePage = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
