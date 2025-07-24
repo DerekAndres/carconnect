@@ -9,6 +9,7 @@ interface VehicleContextType {
   filteredVehicles: Vehicle[];
   updateVehicleVisibility: (vehicleId: string, isVisible: boolean) => void;
   toggleAllVehiclesVisibility: (isVisible: boolean) => void;
+  addVehicle: (vehicle: Omit<Vehicle, 'id'>) => void;
 }
 
 const VehicleContext = createContext<VehicleContextType | undefined>(undefined);
