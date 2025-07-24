@@ -24,27 +24,7 @@ const CatalogPage = () => {
         }}
       >
         {/* Navigation */}
-        <nav className="flex items-center justify-between px-4 md:px-8 lg:px-16 py-6 text-white">
-          <div className="flex items-center space-x-8">
-            <img src="https://api.builder.io/api/v1/image/assets/TEMP/9cc206b396ef0a55afa09e2025176c2de7e8058b?width=523" alt="Car Connect" className="h-16" />
-          </div>
-          
-          <div className="hidden lg:flex items-center space-x-8 text-lg">
-            <Link to="/" className="hover:text-blue-400 transition-colors">Inicio</Link>
-            <Link to="/catalog" className="hover:text-blue-400 transition-colors text-blue-400">Catalogo</Link>
-            <Link to="#" className="hover:text-blue-400 transition-colors">Avaluo de tu Auto</Link>
-            <Link to="#" className="hover:text-blue-400 transition-colors">Agendar Cita</Link>
-            <Link to="#" className="hover:text-blue-400 transition-colors">Sobre nosotros</Link>
-            <Link to="#" className="hover:text-blue-400 transition-colors">Financiamiento</Link>
-            <Link to="#" className="hover:text-blue-400 transition-colors">Contactanos</Link>
-          </div>
-
-          <div className="flex items-center space-x-4">
-            <User className="w-5 h-5" />
-            <span className="text-lg">Hola, Angelo</span>
-            <div className="text-3xl font-medium">car connect</div>
-          </div>
-        </nav>
+        <Navbar currentPage="catalog" />
 
         {/* Search Bar */}
         <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 w-full max-w-6xl px-4">
