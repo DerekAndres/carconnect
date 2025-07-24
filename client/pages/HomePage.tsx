@@ -3,6 +3,7 @@ import { Search, ChevronDown, ChevronLeft, ChevronRight, Menu, X } from 'lucide-
 import { useState } from 'react';
 
 const HomePage = () => {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [searchFilters, setSearchFilters] = useState({
     marca: '',
     modelo: '',
