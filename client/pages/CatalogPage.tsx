@@ -35,25 +35,9 @@ const CatalogPage = () => {
       {/* Catalog Content */}
       <section className="py-16 px-4 md:px-8 lg:px-16">
         <div className="max-w-7xl mx-auto">
-          {/* Header with count and add button */}
-          <div className="flex items-center justify-between mb-8">
-            <div className="flex items-center space-x-8">
-              <span className="text-2xl font-medium">Mostrando: Todos</span>
-              <Link 
-                to="/catalog/edit" 
-                className="text-blue-600 hover:text-blue-800 font-medium text-lg flex items-center space-x-2"
-              >
-                <span>agregar auto</span>
-              </Link>
-            </div>
-            <div className="flex items-center space-x-4">
-              <Link 
-                to="/catalog/edit" 
-                className="text-blue-600 hover:text-blue-800 font-medium text-lg"
-              >
-                REPORTERIA
-              </Link>
-            </div>
+          {/* Header */}
+          <div className="mb-8">
+            <span className="text-2xl font-medium">Mostrando: Todos</span>
           </div>
 
           {/* Vehicle Grid */}
@@ -159,7 +143,7 @@ const CatalogPage = () => {
           </div>
           
           <div className="flex justify-center space-x-6 mb-8">
-            <a href="#" className="text-2xl hover:text-blue-400 transition-colors">📘</a>
+            <a href="#" className="text-2xl hover:text-blue-400 transition-colors">���</a>
             <a href="#" className="text-2xl hover:text-blue-400 transition-colors">📱</a>
             <a href="#" className="text-2xl hover:text-blue-400 transition-colors">🐦</a>
           </div>
