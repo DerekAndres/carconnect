@@ -107,7 +107,7 @@ const HomePage = () => {
 
         {/* Search Bar */}
         <div className="absolute bottom-32 left-1/2 transform -translate-x-1/2 w-full max-w-6xl px-4">
-          <div className="bg-white/10 backdrop-blur-sm rounded-full border-2 border-white p-2 flex items-center justify-between">
+          <div className="bg-white/10 backdrop-blur-sm rounded-full border-2 border-white p-2 hidden lg:flex items-center justify-between">
             <div className="flex items-center space-x-8 px-6">
               <div className="flex items-center space-x-2">
                 <span className="text-white text-lg">Marca</span>
@@ -137,6 +137,18 @@ const HomePage = () => {
             <div className="flex items-center space-x-2 bg-white/20 rounded-full px-6 py-3">
               <Search className="w-6 h-6 text-black" />
               <span className="text-black text-lg">buscar</span>
+            </div>
+          </div>
+
+          {/* Mobile Search */}
+          <div className="lg:hidden bg-white/10 backdrop-blur-sm rounded-lg border-2 border-white p-4">
+            <div className="flex items-center space-x-3 bg-white/20 rounded-full px-4 py-3">
+              <Search className="w-5 h-5 text-white" />
+              <input
+                type="text"
+                placeholder="Buscar vehículos..."
+                className="bg-transparent text-white placeholder-white/70 outline-none flex-1"
+              />
             </div>
           </div>
         </div>
