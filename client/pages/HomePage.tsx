@@ -87,10 +87,10 @@ const HomePage = () => {
         {/* Navigation */}
         <nav className="flex items-center justify-between px-4 md:px-8 lg:px-16 py-6 text-white">
           <div className="flex items-center space-x-8">
-            <img src="https://api.builder.io/api/v1/image/assets/TEMP/a9404f98c7ce41bca505e32535a989fe8e89b6b8?width=599" alt="Car Connect" className="h-16" />
+            <img src="https://api.builder.io/api/v1/image/assets/TEMP/a9404f98c7ce41bca505e32535a989fe8e89b6b8?width=599" alt="Car Connect" className="h-12 md:h-16" />
           </div>
-          
-          <div className="hidden lg:flex items-center space-x-8 text-lg">
+
+          <div className="hidden xl:flex items-center space-x-8 text-lg">
             <Link to="/" className="hover:text-blue-400 transition-colors">Inicio</Link>
             <Link to="/catalog" className="hover:text-blue-400 transition-colors">Catalogo</Link>
             <Link to="#" className="hover:text-blue-400 transition-colors">Avaluo de tu Auto</Link>
@@ -101,7 +101,7 @@ const HomePage = () => {
           </div>
 
           <div className="flex items-center text-xl font-medium">
-            <span className="text-4xl mr-4">car connect</span>
+            <span className="text-2xl md:text-4xl">car connect</span>
           </div>
         </nav>
 
