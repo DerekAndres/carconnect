@@ -61,12 +61,20 @@ const CatalogPage = () => {
       <section className="py-16 px-4 md:px-8 lg:px-16">
         <div className="max-w-7xl mx-auto">
           {/* Header */}
-          <div className="mb-8">
-            <span className="text-2xl font-medium">Mostrando: Todos</span>
+          <div className="mb-8 flex items-center justify-between">
+            <span className="text-2xl font-medium">{getHeaderText()}</span>
+            {vehicleTypeFilter && (
+              <Link
+                to="/catalog"
+                className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors"
+              >
+                Ver Todos los Vehículos
+              </Link>
+            )}
           </div>
 
           {/* Vehicle Grid */}
-          {visibleVehicles.length === 0 ? (
+          {filteredVehicles.length === 0 ? (
             <div className="text-center py-16">
               <div className="bg-gray-100 rounded-lg p-8 max-w-md mx-auto">
                 <h3 className="text-xl font-semibold mb-2">
