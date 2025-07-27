@@ -140,7 +140,7 @@ const CatalogPage = () => {
           )}
 
           {/* Load More Button */}
-          {showingCount < visibleVehicles.length && (
+          {showingCount < filteredVehicles.length && (
             <div className="text-center mt-12">
               <button
                 onClick={loadMore}
