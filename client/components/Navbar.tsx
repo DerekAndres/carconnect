@@ -38,6 +38,12 @@ const Navbar: React.FC<NavbarProps> = ({ currentPage = "home" }) => {
           <Edit className="w-4 h-4" />
           <span>Edit</span>
         </Link>
+        <Link
+          to="/agregar-vehiculo"
+          className={`hover:text-blue-400 transition-colors ${currentPage === "add-vehicle" ? "text-blue-400" : ""}`}
+        >
+          Agregar Vehiculo
+        </Link>
         <Link to="#" className="hover:text-blue-400 transition-colors">
           Avaluo de tu Auto
         </Link>
