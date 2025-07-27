@@ -63,6 +63,7 @@ export const mockVehicles: Vehicle[] = [
     isVisible: true,
     condition: "Usado",
     priceType: "Financiado",
+    vehicleType: "Sedan",
   },
   {
     id: "3",
@@ -80,6 +81,7 @@ export const mockVehicles: Vehicle[] = [
     isVisible: true,
     condition: "Usado",
     priceType: "Contado",
+    vehicleType: "Sedan",
   },
   {
     id: "4",
@@ -97,6 +99,7 @@ export const mockVehicles: Vehicle[] = [
     isVisible: true,
     condition: "Usado",
     priceType: "Financiado",
+    vehicleType: "Pickup",
   },
   {
     id: "5",
@@ -114,6 +117,7 @@ export const mockVehicles: Vehicle[] = [
     isVisible: true,
     condition: "Usado",
     priceType: "Contado",
+    vehicleType: "SUV",
   },
   {
     id: "6",
@@ -131,6 +135,7 @@ export const mockVehicles: Vehicle[] = [
     isVisible: true,
     condition: "Usado",
     priceType: "Financiado",
+    vehicleType: "SUV",
   },
   {
     id: "7",
@@ -148,6 +153,7 @@ export const mockVehicles: Vehicle[] = [
     isVisible: true,
     condition: "Usado",
     priceType: "Contado",
+    vehicleType: "Pickup",
   },
   {
     id: "8",
@@ -165,6 +171,7 @@ export const mockVehicles: Vehicle[] = [
     isVisible: true,
     condition: "Usado",
     priceType: "Financiado",
+    vehicleType: "SUV",
   },
 ];
 
