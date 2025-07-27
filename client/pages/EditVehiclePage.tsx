@@ -78,7 +78,8 @@ const EditVehiclePage = () => {
     features: [],
     isVisible: true,
     condition: 'Usado',
-    priceType: 'Contado'
+    priceType: 'Contado',
+    vehicleType: 'Sedan'
   });
 
   const [selectedFeatures, setSelectedFeatures] = useState<{ [key: string]: boolean }>({});
