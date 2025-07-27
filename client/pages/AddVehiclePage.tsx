@@ -96,15 +96,23 @@ const AddVehiclePage = () => {
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { name, value, type } = e.target;
-    
+
     if (name.startsWith('admin_')) {
       const adminField = name.replace('admin_', '');
+      const newAdminData = {
+        ...formData.adminData!,
+        [adminField]: type === 'number' ? (value === '' ? 0 : parseFloat(value)) : value
+      };
+
       setFormData(prev => ({
         ...prev,
-        adminData: {
-          ...prev.adminData!,
-          [adminField]: type === 'number' ? (value === '' ? 0 : parseFloat(value)) : value
-        }
+        adminData: newAdminData,
+        // Auto-update price when cost fields change
+        price: adminField === 'costoVentaChocado' && priceSource === 'chocado'
+          ? (value === '' ? 0 : parseFloat(value))
+          : adminField === 'costoVentaReparado' && priceSource === 'reparado'
+          ? (value === '' ? 0 : parseFloat(value))
+          : prev.price
       }));
     } else {
       setFormData(prev => ({
@@ -112,6 +120,16 @@ const AddVehiclePage = () => {
         [name]: type === 'number' ? (value === '' ? '' : parseFloat(value)) : value
       }));
     }
+  };
+
+  const handlePriceSourceChange = (source: 'chocado' | 'reparado') => {
+    setPriceSource(source);
+    setFormData(prev => ({
+      ...prev,
+      price: source === 'chocado'
+        ? prev.adminData?.costoVentaChocado || 0
+        : prev.adminData?.costoVentaReparado || 0
+    }));
   };
 
   const handleFeatureToggle = (feature: string) => {
