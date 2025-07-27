@@ -205,9 +205,12 @@ const CatalogEditPage = () => {
                       <Edit2 className="w-4 h-4" />
                       <span>editar</span>
                     </button>
-                    <button className="text-blue-600 hover:text-blue-800 font-medium">
-                      view details
-                    </button>
+                    <Link
+                      to={`/vehicle/${vehicle.id}`}
+                      className="text-blue-600 hover:text-blue-800 font-medium"
+                    >
+                      Ver detalles
+                    </Link>
                   </div>
                 </div>
               </div>
