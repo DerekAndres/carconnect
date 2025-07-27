@@ -62,7 +62,7 @@ const VehicleDetailsPage = () => {
             </Link>
             <div className="flex items-center space-x-4">
               <Link
-                to={`/agregar-vehiculo?edit=${vehicle.id}`}
+                to={`/edit-vehicle/${vehicle.id}`}
                 className="flex items-center space-x-2 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors"
               >
                 <Edit className="w-4 h-4" />
