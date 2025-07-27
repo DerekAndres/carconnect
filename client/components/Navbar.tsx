@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { User, Edit } from "lucide-react";
 
 interface NavbarProps {
-  currentPage?: "home" | "catalog" | "catalog-edit";
+  currentPage?: "home" | "catalog" | "catalog-edit" | "add-vehicle";
 }
 
 const Navbar: React.FC<NavbarProps> = ({ currentPage = "home" }) => {
