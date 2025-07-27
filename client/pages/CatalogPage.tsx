@@ -106,9 +106,12 @@ const CatalogPage = () => {
                       <span className="text-green-600 text-xl font-bold">
                         L. 150,000
                       </span>
-                      <button className="text-blue-600 hover:text-blue-800 font-medium">
-                        Ver detalles
-                      </button>
+                      <Link
+                      to={`/vehicle/${vehicle.id}`}
+                      className="text-blue-600 hover:text-blue-800 font-medium"
+                    >
+                      Ver detalles
+                    </Link>
                     </div>
                   </div>
                 </div>
