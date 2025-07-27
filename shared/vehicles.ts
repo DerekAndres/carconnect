@@ -45,6 +45,7 @@ export const mockVehicles: Vehicle[] = [
     isVisible: true,
     condition: "Usado",
     priceType: "Contado",
+    vehicleType: "Sedan",
   },
   {
     id: "2",
