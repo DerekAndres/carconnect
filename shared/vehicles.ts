@@ -13,6 +13,7 @@ export interface Vehicle {
   isVisible: boolean;
   condition: "Nuevo" | "Usado";
   priceType: "Contado" | "Financiado";
+  vehicleType: "SUV" | "Sedan" | "Pickup";
   // Admin fields - only visible to Angelo
   adminData?: {
     fechaLlegadaHonduras?: string;
