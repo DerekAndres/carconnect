@@ -13,6 +13,18 @@ export interface Vehicle {
   isVisible: boolean;
   condition: "Nuevo" | "Usado";
   priceType: "Contado" | "Financiado";
+  // Admin fields - only visible to Angelo
+  adminData?: {
+    fechaLlegadaHonduras?: string;
+    fechaSalidaEEUU?: string;
+    estadoCompraEEUU?: string;
+    paginaWebCompra?: 'Copart' | 'IAAI' | 'Otro';
+    nombreEnPapeles?: string;
+    costoChocado?: number;
+    costoReparado?: number | null; // null means N/A
+    costoVentaChocado?: number;
+    costoVentaReparado?: number;
+  };
 }
 
 export const mockVehicles: Vehicle[] = [
