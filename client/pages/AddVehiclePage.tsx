@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { ArrowLeft, Upload, X, Plus } from 'lucide-react';
 import { useVehicles } from '../context/VehicleContext';
 import { Vehicle } from '@shared/vehicles';
@@ -60,12 +60,7 @@ const featureCategories = {
 
 const AddVehiclePage = () => {
   const navigate = useNavigate();
-  const [searchParams] = useSearchParams();
-  const { vehicles, addVehicle, setVehicles } = useVehicles();
-  
-  const editId = searchParams.get('edit');
-  const isEditing = !!editId;
-  const vehicleToEdit = isEditing ? vehicles.find(v => v.id === editId) : null;
+  const { addVehicle } = useVehicles();
 
   const [formData, setFormData] = useState<Omit<Vehicle, 'id'>>({
     make: '',
@@ -78,50 +73,43 @@ const AddVehiclePage = () => {
     description: '',
     image: '',
     features: [],
-    isVisible: true,
+    isVisible: true, // Always true for new vehicles
     condition: 'Usado',
-    priceType: 'Contado'
+    priceType: 'Contado',
+    adminData: {
+      fechaLlegadaHonduras: '',
+      fechaSalidaEEUU: '',
+      estadoCompraEEUU: '',
+      paginaWebCompra: 'Copart',
+      nombreEnPapeles: '',
+      costoChocado: 0,
+      costoReparado: null,
+      costoVentaChocado: 0,
+      costoVentaReparado: 0
+    }
   });
 
   const [selectedFeatures, setSelectedFeatures] = useState<{ [key: string]: boolean }>({});
   const [images, setImages] = useState<string[]>(['']);
 
-  // Load vehicle data when editing
-  useEffect(() => {
-    if (isEditing && vehicleToEdit) {
-      setFormData({
-        make: vehicleToEdit.make,
-        model: vehicleToEdit.model,
-        year: vehicleToEdit.year,
-        price: vehicleToEdit.price,
-        mileage: vehicleToEdit.mileage,
-        fuelType: vehicleToEdit.fuelType,
-        transmission: vehicleToEdit.transmission,
-        description: vehicleToEdit.description,
-        image: vehicleToEdit.image,
-        features: vehicleToEdit.features,
-        isVisible: vehicleToEdit.isVisible,
-        condition: vehicleToEdit.condition,
-        priceType: vehicleToEdit.priceType
-      });
-
-      // Set selected features
-      const featuresMap: { [key: string]: boolean } = {};
-      vehicleToEdit.features.forEach(feature => {
-        featuresMap[feature] = true;
-      });
-      setSelectedFeatures(featuresMap);
-
-      setImages([vehicleToEdit.image]);
-    }
-  }, [isEditing, vehicleToEdit]);
-
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { name, value, type } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: type === 'number' ? parseFloat(value) || 0 : value
-    }));
+    
+    if (name.startsWith('admin_')) {
+      const adminField = name.replace('admin_', '');
+      setFormData(prev => ({
+        ...prev,
+        adminData: {
+          ...prev.adminData!,
+          [adminField]: type === 'number' ? (value === '' ? 0 : parseFloat(value)) : value
+        }
+      }));
+    } else {
+      setFormData(prev => ({
+        ...prev,
+        [name]: type === 'number' ? (value === '' ? '' : parseFloat(value)) : value
+      }));
+    }
   };
 
   const handleFeatureToggle = (feature: string) => {
@@ -166,21 +154,14 @@ const AddVehiclePage = () => {
     const vehicleData = {
       ...formData,
       features: selectedFeaturesList,
-      image: images[0] || formData.image
+      image: images[0] || formData.image,
+      // Convert empty strings back to numbers for numeric fields
+      price: typeof formData.price === 'string' ? parseFloat(formData.price) || 0 : formData.price,
+      mileage: typeof formData.mileage === 'string' ? parseFloat(formData.mileage) || 0 : formData.mileage,
+      year: typeof formData.year === 'string' ? parseInt(formData.year) || new Date().getFullYear() : formData.year
     };
 
-    if (isEditing && vehicleToEdit) {
-      // Update existing vehicle
-      setVehicles(prev => prev.map(vehicle => 
-        vehicle.id === editId 
-          ? { ...vehicleData, id: editId }
-          : vehicle
-      ));
-    } else {
-      // Add new vehicle
-      addVehicle(vehicleData);
-    }
-
+    addVehicle(vehicleData);
     navigate('/catalog');
   };
 
@@ -209,7 +190,7 @@ const AddVehiclePage = () => {
                 <span>Volver</span>
               </button>
               <h1 className="text-2xl font-bold text-gray-900">
-                {isEditing ? 'Editar Vehículo' : 'Agregar Nuevo Vehículo'}
+                Agregar Nuevo Vehículo
               </h1>
             </div>
           </div>
@@ -270,13 +251,11 @@ const AddVehiclePage = () => {
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">Precio (L.) *</label>
                   <input
-                    type="number"
+                    type="text"
                     name="price"
                     value={formData.price}
                     onChange={handleInputChange}
                     required
-                    min="0"
-                    step="1000"
                     className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
                     placeholder="150000"
                   />
@@ -285,11 +264,10 @@ const AddVehiclePage = () => {
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">Kilometraje</label>
                   <input
-                    type="number"
+                    type="text"
                     name="mileage"
                     value={formData.mileage}
                     onChange={handleInputChange}
-                    min="0"
                     className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
                     placeholder="20000"
                   />
@@ -339,7 +317,7 @@ const AddVehiclePage = () => {
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+              <div className="grid grid-cols-1 md:grid-cols-1 gap-4 mb-4">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">Tipo de Precio</label>
                   <select
@@ -350,19 +328,6 @@ const AddVehiclePage = () => {
                   >
                     <option value="Contado">Contado</option>
                     <option value="Financiado">Financiado</option>
-                  </select>
-                </div>
-                
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Visibilidad</label>
-                  <select
-                    name="isVisible"
-                    value={formData.isVisible.toString()}
-                    onChange={(e) => setFormData(prev => ({ ...prev, isVisible: e.target.value === 'true' }))}
-                    className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  >
-                    <option value="true">Visible en catálogo</option>
-                    <option value="false">Oculto del catálogo</option>
                   </select>
                 </div>
               </div>
@@ -378,6 +343,130 @@ const AddVehiclePage = () => {
                   className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
                   placeholder="Describe las características principales del vehículo..."
                 />
+              </div>
+            </div>
+
+            {/* Admin Information - Only for Angelo */}
+            <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-6 shadow-lg">
+              <h2 className="text-xl font-bold text-gray-900 mb-6 flex items-center">
+                <span className="bg-yellow-400 text-yellow-900 px-2 py-1 rounded text-sm mr-3">ADMIN</span>
+                Información Administrativa
+              </h2>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Fecha Llegada a Honduras</label>
+                  <input
+                    type="date"
+                    name="admin_fechaLlegadaHonduras"
+                    value={formData.adminData?.fechaLlegadaHonduras || ''}
+                    onChange={handleInputChange}
+                    className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  />
+                </div>
+                
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Fecha Salida de EEUU</label>
+                  <input
+                    type="date"
+                    name="admin_fechaSalidaEEUU"
+                    value={formData.adminData?.fechaSalidaEEUU || ''}
+                    onChange={handleInputChange}
+                    className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Estado de Compra (EEUU)</label>
+                  <input
+                    type="text"
+                    name="admin_estadoCompraEEUU"
+                    value={formData.adminData?.estadoCompraEEUU || ''}
+                    onChange={handleInputChange}
+                    className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    placeholder="California, Texas, Florida..."
+                  />
+                </div>
+                
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Página Web de Compra</label>
+                  <select
+                    name="admin_paginaWebCompra"
+                    value={formData.adminData?.paginaWebCompra || 'Copart'}
+                    onChange={handleInputChange}
+                    className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  >
+                    <option value="Copart">Copart</option>
+                    <option value="IAAI">IAAI</option>
+                    <option value="Otro">Otro</option>
+                  </select>
+                </div>
+              </div>
+
+              <div className="mb-4">
+                <label className="block text-sm font-medium text-gray-700 mb-2">Nombre en Papeles</label>
+                <input
+                  type="text"
+                  name="admin_nombreEnPapeles"
+                  value={formData.adminData?.nombreEnPapeles || ''}
+                  onChange={handleInputChange}
+                  className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  placeholder="A nombre de quien está el vehículo..."
+                />
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Costo Chocado (USD)</label>
+                  <input
+                    type="text"
+                    name="admin_costoChocado"
+                    value={formData.adminData?.costoChocado || ''}
+                    onChange={handleInputChange}
+                    className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    placeholder="5000"
+                  />
+                </div>
+                
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Costo Reparado (USD)</label>
+                  <input
+                    type="text"
+                    name="admin_costoReparado"
+                    value={formData.adminData?.costoReparado || ''}
+                    onChange={handleInputChange}
+                    className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    placeholder="Dejar vacío si no está reparado"
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Costo Venta Chocado (L.)</label>
+                  <input
+                    type="text"
+                    name="admin_costoVentaChocado"
+                    value={formData.adminData?.costoVentaChocado || ''}
+                    onChange={handleInputChange}
+                    className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    placeholder="120000"
+                  />
+                </div>
+                
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Costo Venta Reparado (L.)</label>
+                  <input
+                    type="text"
+                    name="admin_costoVentaReparado"
+                    value={formData.adminData?.costoVentaReparado || ''}
+                    onChange={handleInputChange}
+                    className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    placeholder="150000"
+                  />
+                </div>
               </div>
             </div>
 
@@ -477,7 +566,7 @@ const AddVehiclePage = () => {
                 <p className="text-gray-600 text-sm">{formData.description}</p>
                 <div className="flex items-center justify-between">
                   <span className="text-xl font-bold text-blue-600">
-                    L. {formData.price.toLocaleString()}
+                    L. {typeof formData.price === 'number' ? formData.price.toLocaleString() : formData.price}
                   </span>
                   <span className={`px-2 py-1 rounded text-xs ${
                     formData.condition === 'Nuevo' 
@@ -503,7 +592,7 @@ const AddVehiclePage = () => {
                   type="submit"
                   className="w-full bg-green-600 text-white py-3 rounded-lg font-medium hover:bg-green-700 transition-colors"
                 >
-                  {isEditing ? 'Actualizar Vehículo' : 'Guardar Vehículo'}
+                  Agregar Vehículo
                 </button>
                 
                 <button
