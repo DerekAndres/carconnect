@@ -29,7 +29,14 @@ const CatalogPage = () => {
   }, [vehicleTypeFilter, setFilters]);
 
   const loadMore = () => {
-    setShowingCount((prev) => Math.min(prev + 4, visibleVehicles.length));
+    setShowingCount((prev) => Math.min(prev + 4, filteredVehicles.length));
+  };
+
+  const getHeaderText = () => {
+    if (vehicleTypeFilter) {
+      return `Mostrando: ${vehicleTypeFilter}s`;
+    }
+    return 'Mostrando: Todos';
   };
 
   return (
