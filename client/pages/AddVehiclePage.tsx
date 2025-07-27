@@ -76,6 +76,7 @@ const AddVehiclePage = () => {
     isVisible: true, // Always true for new vehicles
     condition: 'Usado',
     priceType: 'Contado',
+    vehicleType: 'Sedan',
     adminData: {
       fechaLlegadaHonduras: '',
       fechaSalidaEEUU: '',
