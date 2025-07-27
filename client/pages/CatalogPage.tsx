@@ -6,9 +6,27 @@ import SearchFilterBar from "../components/SearchFilterBar";
 import Navbar from "../components/Navbar";
 
 const CatalogPage = () => {
-  const { vehicles } = useVehicles();
-  const visibleVehicles = vehicles.filter((v) => v.isVisible);
+  const { vehicles, setFilters } = useVehicles();
+  const [searchParams] = useSearchParams();
   const [showingCount, setShowingCount] = useState(8);
+
+  const vehicleTypeFilter = searchParams.get('type') as 'SUV' | 'Sedan' | 'Pickup' | null;
+
+  // Filter vehicles based on URL params and visibility
+  const filteredVehicles = vehicles.filter((v) => {
+    if (!v.isVisible) return false;
+    if (vehicleTypeFilter && v.vehicleType !== vehicleTypeFilter) return false;
+    return true;
+  });
+
+  useEffect(() => {
+    // Update global filters when URL params change
+    if (vehicleTypeFilter) {
+      setFilters({ vehicleType: vehicleTypeFilter });
+    } else {
+      setFilters({});
+    }
+  }, [vehicleTypeFilter, setFilters]);
 
   const loadMore = () => {
     setShowingCount((prev) => Math.min(prev + 4, visibleVehicles.length));
