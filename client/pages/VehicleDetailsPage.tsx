@@ -230,6 +230,79 @@ const VehicleDetailsPage = () => {
               </div>
             </div>
 
+            {/* Admin Information - Only visible to Angelo */}
+            {vehicle.adminData && (
+              <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-6 shadow-lg">
+                <h2 className="text-xl font-bold text-gray-900 mb-4 flex items-center">
+                  <span className="bg-yellow-400 text-yellow-900 px-2 py-1 rounded text-sm mr-3">ADMIN</span>
+                  Información Administrativa
+                </h2>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                  {vehicle.adminData.fechaLlegadaHonduras && (
+                    <div>
+                      <span className="text-gray-500">Fecha Llegada a Honduras:</span>
+                      <p className="font-medium">{new Date(vehicle.adminData.fechaLlegadaHonduras).toLocaleDateString()}</p>
+                    </div>
+                  )}
+                  {vehicle.adminData.fechaSalidaEEUU && (
+                    <div>
+                      <span className="text-gray-500">Fecha Salida de EEUU:</span>
+                      <p className="font-medium">{new Date(vehicle.adminData.fechaSalidaEEUU).toLocaleDateString()}</p>
+                    </div>
+                  )}
+                  {vehicle.adminData.estadoCompraEEUU && (
+                    <div>
+                      <span className="text-gray-500">Estado de Compra:</span>
+                      <p className="font-medium">{vehicle.adminData.estadoCompraEEUU}</p>
+                    </div>
+                  )}
+                  {vehicle.adminData.paginaWebCompra && (
+                    <div>
+                      <span className="text-gray-500">Página Web:</span>
+                      <p className="font-medium">{vehicle.adminData.paginaWebCompra}</p>
+                    </div>
+                  )}
+                  {vehicle.adminData.nombreEnPapeles && (
+                    <div className="md:col-span-2">
+                      <span className="text-gray-500">Nombre en Papeles:</span>
+                      <p className="font-medium">{vehicle.adminData.nombreEnPapeles}</p>
+                    </div>
+                  )}
+                </div>
+
+                {/* Cost Information */}
+                <div className="mt-4 pt-4 border-t border-yellow-200">
+                  <h3 className="font-semibold text-gray-900 mb-3">Información de Costos</h3>
+                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
+                    {vehicle.adminData.costoChocado !== undefined && (
+                      <div className="bg-red-50 border border-red-200 rounded p-3">
+                        <span className="text-red-600 text-xs">Costo Chocado</span>
+                        <p className="font-bold text-red-800">${vehicle.adminData.costoChocado?.toLocaleString()}</p>
+                      </div>
+                    )}
+                    <div className="bg-blue-50 border border-blue-200 rounded p-3">
+                      <span className="text-blue-600 text-xs">Costo Reparado</span>
+                      <p className="font-bold text-blue-800">
+                        {vehicle.adminData.costoReparado === null ? 'N/A' : `$${vehicle.adminData.costoReparado?.toLocaleString()}`}
+                      </p>
+                    </div>
+                    {vehicle.adminData.costoVentaChocado !== undefined && (
+                      <div className="bg-orange-50 border border-orange-200 rounded p-3">
+                        <span className="text-orange-600 text-xs">Venta Chocado</span>
+                        <p className="font-bold text-orange-800">L. {vehicle.adminData.costoVentaChocado?.toLocaleString()}</p>
+                      </div>
+                    )}
+                    {vehicle.adminData.costoVentaReparado !== undefined && (
+                      <div className="bg-green-50 border border-green-200 rounded p-3">
+                        <span className="text-green-600 text-xs">Venta Reparado</span>
+                        <p className="font-bold text-green-800">L. {vehicle.adminData.costoVentaReparado?.toLocaleString()}</p>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </div>
+            )}
+
             {/* Contact Section */}
             <div className="bg-white rounded-lg p-6 shadow-lg">
               <h2 className="text-xl font-bold text-gray-900 mb-4">¿Interesado en este vehículo?</h2>
