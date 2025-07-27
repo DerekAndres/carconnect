@@ -167,16 +167,20 @@ const HomePage = () => {
         <h2 className="text-3xl font-bold text-center mb-12">Busca por tipo</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
           {carTypes.map((type, index) => (
-            <div key={index} className="text-center">
-              <div className="w-48 h-32 mx-auto mb-4 bg-gray-200 rounded-lg overflow-hidden">
+            <Link
+              key={index}
+              to={`/catalog?type=${type.name}`}
+              className="text-center group cursor-pointer transform transition-transform hover:scale-105"
+            >
+              <div className="w-48 h-32 mx-auto mb-4 bg-gray-200 rounded-lg overflow-hidden group-hover:shadow-lg transition-shadow">
                 <img
                   src={type.image}
                   alt={type.name}
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-cover group-hover:brightness-110 transition-all"
                 />
               </div>
-              <h3 className="text-xl font-semibold">{type.name}</h3>
-            </div>
+              <h3 className="text-xl font-semibold group-hover:text-blue-600 transition-colors">{type.name}</h3>
+            </Link>
           ))}
         </div>
       </section>
