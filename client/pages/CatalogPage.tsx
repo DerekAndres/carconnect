@@ -1,6 +1,6 @@
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { Search, ChevronDown, User } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useVehicles } from "../context/VehicleContext";
 import SearchFilterBar from "../components/SearchFilterBar";
 import Navbar from "../components/Navbar";
