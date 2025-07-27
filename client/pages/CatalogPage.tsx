@@ -93,7 +93,7 @@ const CatalogPage = () => {
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-              {visibleVehicles.slice(0, showingCount).map((vehicle) => (
+              {filteredVehicles.slice(0, showingCount).map((vehicle) => (
                 <div
                   key={vehicle.id}
                   className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow"
