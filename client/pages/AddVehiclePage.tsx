@@ -270,15 +270,27 @@ const AddVehiclePage = () => {
                 
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">Precio (L.) *</label>
-                  <input
-                    type="text"
-                    name="price"
-                    value={formData.price}
-                    onChange={handleInputChange}
-                    required
-                    className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    placeholder="150000"
-                  />
+                  <div className="space-y-2">
+                    <select
+                      value={priceSource}
+                      onChange={(e) => handlePriceSourceChange(e.target.value as 'chocado' | 'reparado')}
+                      className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    >
+                      <option value="chocado">Costo Venta Chocado</option>
+                      <option value="reparado">Costo Venta Reparado</option>
+                    </select>
+                    <input
+                      type="text"
+                      name="price"
+                      value={formData.price}
+                      readOnly
+                      className="w-full border border-gray-300 rounded-lg px-3 py-2 bg-gray-100 text-gray-700 cursor-not-allowed"
+                      placeholder="El precio se actualizará automáticamente"
+                    />
+                    <p className="text-xs text-gray-500">
+                      El precio se toma automáticamente del {priceSource === 'chocado' ? 'Costo Venta Chocado' : 'Costo Venta Reparado'} en la sección administrativa
+                    </p>
+                  </div>
                 </div>
                 
                 <div>
