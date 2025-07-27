@@ -52,6 +52,9 @@ export const VehicleProvider: React.FC<VehicleProviderProps> = ({
     if (filters.condition && vehicle.condition !== filters.condition) {
       return false;
     }
+    if (filters.vehicleType && vehicle.vehicleType !== filters.vehicleType) {
+      return false;
+    }
     if (filters.priceRange) {
       const [min, max] = filters.priceRange;
       if (vehicle.price < min || vehicle.price > max) {
