@@ -89,6 +89,8 @@ const AddVehiclePage = () => {
     }
   });
 
+  const [priceSource, setPriceSource] = useState<'chocado' | 'reparado'>('chocado');
+
   const [selectedFeatures, setSelectedFeatures] = useState<{ [key: string]: boolean }>({});
   const [images, setImages] = useState<string[]>(['']);
 
