@@ -101,7 +101,8 @@ const EditVehiclePage = () => {
         features: vehicleToEdit.features,
         isVisible: vehicleToEdit.isVisible,
         condition: vehicleToEdit.condition,
-        priceType: vehicleToEdit.priceType
+        priceType: vehicleToEdit.priceType,
+        vehicleType: vehicleToEdit.vehicleType || 'Sedan'
       });
 
       // Set selected features
