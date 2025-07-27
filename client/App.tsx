@@ -10,6 +10,7 @@ import HomePage from "./pages/HomePage";
 import CatalogPage from "./pages/CatalogPage";
 import CatalogEditPage from "./pages/CatalogEditPage";
 import VehicleDetailsPage from "./pages/VehicleDetailsPage";
+import AddVehiclePage from "./pages/AddVehiclePage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
