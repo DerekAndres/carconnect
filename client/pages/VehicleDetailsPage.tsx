@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useParams, Link, Navigate } from 'react-router-dom';
-import { ArrowLeft, Heart, Share2, ChevronLeft, ChevronRight } from 'lucide-react';
+import { ArrowLeft, Heart, Share2, ChevronLeft, ChevronRight, Edit } from 'lucide-react';
 import { useVehicles } from '../context/VehicleContext';
 import Navbar from '../components/Navbar';
 
