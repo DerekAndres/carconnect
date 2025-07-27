@@ -39,6 +39,16 @@ const VehicleDetailsPage = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
+      {/* Navbar */}
+      <div
+        className="relative bg-cover bg-center bg-no-repeat"
+        style={{
+          backgroundImage: `linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('https://api.builder.io/api/v1/image/assets/TEMP/afc4b3d892254d6310229ea10631232715ca2db6?width=3881')`
+        }}
+      >
+        <Navbar />
+      </div>
+
       {/* Header with navigation */}
       <div className="bg-white shadow-sm">
         <div className="max-w-7xl mx-auto px-4 md:px-8 lg:px-16 py-4">
@@ -51,6 +61,13 @@ const VehicleDetailsPage = () => {
               <span>Volver al Catálogo</span>
             </Link>
             <div className="flex items-center space-x-4">
+              <Link
+                to={`/agregar-vehiculo?edit=${vehicle.id}`}
+                className="flex items-center space-x-2 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors"
+              >
+                <Edit className="w-4 h-4" />
+                <span>Editar</span>
+              </Link>
               <button className="flex items-center space-x-2 text-gray-600 hover:text-red-600 transition-colors">
                 <Heart className="w-5 h-5" />
                 <span>Guardar</span>
