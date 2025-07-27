@@ -89,30 +89,17 @@ const CatalogPage = () => {
 
                     <hr className="mb-4" />
 
-                    <div className="flex items-center justify-between mb-2">
-                      <div className="flex items-center space-x-1">
-                        <span className="text-sm text-gray-500">
-                          {vehicle.priceType === "Contado" ? "C" : "PV"}
-                        </span>
-                        <span
-                          className={`text-xl font-bold ${vehicle.priceType === "Contado" ? "text-red-600" : "text-green-600"}`}
-                        >
-                          L. {vehicle.price.toLocaleString()}
-                        </span>
-                      </div>
-                    </div>
-
                     <div className="flex items-center justify-between">
-                      <span className="text-green-600 text-xl font-bold">
-                        L. 150,000
-                      </span>
-                      <Link
+                    <span className="text-green-600 text-2xl font-bold">
+                      L. {vehicle.price.toLocaleString()}
+                    </span>
+                    <Link
                       to={`/vehicle/${vehicle.id}`}
                       className="text-blue-600 hover:text-blue-800 font-medium"
                     >
                       Ver detalles
                     </Link>
-                    </div>
+                  </div>
                   </div>
                 </div>
               ))}
