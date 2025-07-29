@@ -105,10 +105,91 @@ const CatalogEditPage = () => {
               <button className="text-blue-600 hover:text-blue-800 font-medium">
                 REPORTERIA
               </button>
+              <button
+                onClick={() => setShowFeaturedManagement(!showFeaturedManagement)}
+                className={`px-4 py-2 rounded-lg font-medium transition-colors ${
+                  showFeaturedManagement
+                    ? 'bg-yellow-600 text-white hover:bg-yellow-700'
+                    : 'bg-yellow-100 text-yellow-800 hover:bg-yellow-200'
+                }`}
+              >
+                {showFeaturedManagement ? 'Ocultar' : 'Gestionar'} Destacados
+              </button>
             </div>
           </div>
         </div>
       </section>
+
+      {/* Featured Vehicles Management */}
+      {showFeaturedManagement && (
+        <section className="py-8 px-4 md:px-8 lg:px-16 bg-yellow-50 border-b">
+          <div className="max-w-7xl mx-auto">
+            <div className="mb-6">
+              <h3 className="text-xl font-bold text-gray-900 mb-2">
+                Gestionar Vehículos Destacados ("Podrían Interesarte")
+              </h3>
+              <p className="text-gray-600">
+                Selecciona hasta 4 vehículos para mostrar en la sección "Podrían Interesarte" del inicio.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              {vehicles.filter(v => v.isVisible).map((vehicle) => (
+                <div
+                  key={vehicle.id}
+                  className={`bg-white rounded-lg shadow-md overflow-hidden border-2 transition-all cursor-pointer ${
+                    vehicle.isFeatured
+                      ? 'border-yellow-500 shadow-lg transform scale-105'
+                      : 'border-gray-200 hover:border-yellow-300'
+                  }`}
+                  onClick={() => updateVehicleFeatured(vehicle.id, !vehicle.isFeatured)}
+                >
+                  <div className="relative">
+                    <img
+                      src={vehicle.image}
+                      alt={`${vehicle.make} ${vehicle.model}`}
+                      className="w-full h-32 object-cover"
+                    />
+                    {vehicle.isFeatured && (
+                      <div className="absolute top-2 right-2 bg-yellow-500 text-white px-2 py-1 rounded-full text-xs font-bold">
+                        ⭐ DESTACADO
+                      </div>
+                    )}
+                  </div>
+
+                  <div className="p-4">
+                    <h4 className="font-semibold text-sm">
+                      {vehicle.make} {vehicle.model} {vehicle.year}
+                    </h4>
+                    <p className="text-gray-600 text-xs mt-1">
+                      L. {vehicle.price.toLocaleString()}
+                    </p>
+                    <div className="mt-2">
+                      <span className={`text-xs px-2 py-1 rounded-full ${
+                        vehicle.isFeatured
+                          ? 'bg-yellow-100 text-yellow-800'
+                          : 'bg-gray-100 text-gray-600'
+                      }`}>
+                        {vehicle.isFeatured ? 'Destacado' : 'Click para destacar'}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <div className="mt-6 p-4 bg-yellow-100 rounded-lg">
+              <p className="text-sm text-yellow-800">
+                <strong>Nota:</strong> Actualmente hay{' '}
+                <span className="font-bold">
+                  {vehicles.filter(v => v.isFeatured).length}
+                </span>{' '}
+                vehículos destacados. Se recomienda tener exactamente 4 para una mejor presentación.
+              </p>
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* Vehicle Grid */}
       <section className="py-16 px-4 md:px-8 lg:px-16">
