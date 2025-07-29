@@ -272,9 +272,11 @@ const HomePage = () => {
               cambiar tu carro, mandanos tu informacion y te hacemos una
               cotizacion sin compromiso.
             </p>
-            <button className="bg-blue-600 text-white px-8 py-4 rounded-lg hover:bg-blue-700 transition-colors font-medium">
-              AVALUA MI AUTO
-            </button>
+            <Link to="/avaluo">
+              <button className="bg-blue-600 text-white px-8 py-4 rounded-lg hover:bg-blue-700 transition-colors font-medium">
+                AVALUA MI AUTO
+              </button>
+            </Link>
           </div>
           <div>
             <img
