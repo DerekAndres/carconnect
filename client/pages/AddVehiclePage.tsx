@@ -94,7 +94,12 @@ const AddVehiclePage = () => {
   const [priceSource, setPriceSource] = useState<'chocado' | 'reparado'>('chocado');
 
   const [selectedFeatures, setSelectedFeatures] = useState<{ [key: string]: boolean }>({});
-  const [images, setImages] = useState<string[]>(['']);
+  const [mediaFiles, setMediaFiles] = useState<Array<{
+    file: File | null;
+    preview: string;
+    type: 'image' | 'video';
+    isPrimary: boolean;
+  }>>([{ file: null, preview: '', type: 'image', isPrimary: true }]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { name, value, type } = e.target;
