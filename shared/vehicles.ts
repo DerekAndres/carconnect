@@ -182,4 +182,5 @@ export interface VehicleFilters {
   priceRange?: [number, number];
   condition?: string;
   vehicleType?: "SUV" | "Sedan" | "Pickup";
+  searchText?: string;
 }
