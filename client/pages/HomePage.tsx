@@ -343,7 +343,10 @@ const HomePage = () => {
               <Link to="#" className="hover:text-blue-400 transition-colors">
                 Sobre Nosotros
               </Link>
-              <Link to="/financiamiento" className="hover:text-blue-400 transition-colors">
+              <Link
+                to="/financiamiento"
+                className="hover:text-blue-400 transition-colors"
+              >
                 Financiamiento
               </Link>
               <Link
@@ -355,7 +358,10 @@ const HomePage = () => {
               <Link to="#" className="hover:text-blue-400 transition-colors">
                 Contactanos
               </Link>
-              <Link to="/avaluo" className="hover:text-blue-400 transition-colors">
+              <Link
+                to="/avaluo"
+                className="hover:text-blue-400 transition-colors"
+              >
                 Avalua Tu Auto
               </Link>
             </nav>

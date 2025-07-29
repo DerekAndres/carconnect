@@ -47,10 +47,16 @@ const Navbar: React.FC<NavbarProps> = ({ currentPage = "home" }) => {
         <Link to="/avaluo" className="hover:text-blue-400 transition-colors">
           Avalúa tu Auto
         </Link>
-        <Link to="/financiamiento" className="hover:text-blue-400 transition-colors">
+        <Link
+          to="/financiamiento"
+          className="hover:text-blue-400 transition-colors"
+        >
           Financiamiento
         </Link>
-        <Link to="/calcular-cuotas" className="hover:text-blue-400 transition-colors">
+        <Link
+          to="/calcular-cuotas"
+          className="hover:text-blue-400 transition-colors"
+        >
           Calculadora de Cuotas
         </Link>
       </div>

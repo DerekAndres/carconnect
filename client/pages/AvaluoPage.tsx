@@ -4,11 +4,30 @@ import Navbar from "../components/Navbar";
 import { Button } from "../components/ui/button";
 import { Input } from "../components/ui/input";
 import { Label } from "../components/ui/label";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../components/ui/card";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../components/ui/select";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "../components/ui/card";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "../components/ui/select";
 import { Textarea } from "../components/ui/textarea";
 import { Separator } from "../components/ui/separator";
-import { Upload, Car, DollarSign, CheckCircle, Camera, FileText } from "lucide-react";
+import {
+  Upload,
+  Car,
+  DollarSign,
+  CheckCircle,
+  Camera,
+  FileText,
+} from "lucide-react";
 
 const AvaluoPage = () => {
   const [formData, setFormData] = useState({
@@ -16,7 +35,7 @@ const AvaluoPage = () => {
     nombre: "",
     email: "",
     telefono: "",
-    
+
     // Información del Vehículo
     marca: "",
     modelo: "",
@@ -25,46 +44,48 @@ const AvaluoPage = () => {
     transmision: "",
     combustible: "",
     color: "",
-    
+
     // Estado del Vehículo
     estadoGeneral: "",
     accidentes: "",
     mantenimientos: "",
     documentos: "",
     observaciones: "",
-    
+
     // Motivación
     razonVenta: "",
     tiempoVenta: "",
-    precioEsperado: ""
+    precioEsperado: "",
   });
 
   const [images, setImages] = useState<File[]>([]);
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
   };
 
   const handleSelectChange = (name: string, value: string) => {
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
   };
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       const newFiles = Array.from(e.target.files);
-      setImages(prev => [...prev, ...newFiles].slice(0, 8)); // Máximo 8 imágenes
+      setImages((prev) => [...prev, ...newFiles].slice(0, 8)); // Máximo 8 imágenes
     }
   };
 
   const removeImage = (index: number) => {
-    setImages(prev => prev.filter((_, i) => i !== index));
+    setImages((prev) => prev.filter((_, i) => i !== index));
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -78,34 +99,34 @@ const AvaluoPage = () => {
     {
       step: "1",
       title: "Completa el formulario",
-      description: "Proporciona información detallada de tu vehículo"
+      description: "Proporciona información detallada de tu vehículo",
     },
     {
-      step: "2", 
+      step: "2",
       title: "Sube fotos del auto",
-      description: "Interior, exterior y documentos del vehículo"
+      description: "Interior, exterior y documentos del vehículo",
     },
     {
       step: "3",
       title: "Recibe tu avalúo",
-      description: "Te contactamos en 24-48 horas con una cotización"
+      description: "Te contactamos en 24-48 horas con una cotización",
     },
     {
       step: "4",
       title: "Agenda inspección",
-      description: "Confirmamos el valor con una revisión presencial"
-    }
+      description: "Confirmamos el valor con una revisión presencial",
+    },
   ];
 
   const requiredPhotos = [
     "Vista frontal completa",
     "Vista trasera completa",
     "Lateral izquierdo",
-    "Lateral derecho", 
+    "Lateral derecho",
     "Interior (asientos delanteros)",
     "Tablero y volante",
     "Motor",
-    "Documentos del vehículo"
+    "Documentos del vehículo",
   ];
 
   return (
@@ -116,9 +137,7 @@ const AvaluoPage = () => {
 
         <div className="container mx-auto px-4 py-20">
           <div className="text-center max-w-4xl mx-auto">
-            <h1 className="text-5xl font-bold mb-6">
-              Avalúa tu Auto
-            </h1>
+            <h1 className="text-5xl font-bold mb-6">Avalúa tu Auto</h1>
             <p className="text-xl mb-8">
               Obtén una cotización profesional y sin compromiso de tu vehículo
             </p>
@@ -132,7 +151,7 @@ const AvaluoPage = () => {
           <h2 className="text-3xl font-bold text-center mb-12">
             Cómo Funciona
           </h2>
-          
+
           <div className="grid md:grid-cols-4 gap-8">
             {evaluationSteps.map((item, index) => (
               <div key={index} className="text-center">
@@ -154,7 +173,8 @@ const AvaluoPage = () => {
             <CardHeader className="text-center">
               <CardTitle className="text-2xl">Formulario de Avalúo</CardTitle>
               <CardDescription>
-                Completa toda la información para obtener la cotización más precisa
+                Completa toda la información para obtener la cotización más
+                precisa
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -215,7 +235,11 @@ const AvaluoPage = () => {
                   <div className="grid md:grid-cols-3 gap-4 mb-4">
                     <div>
                       <Label htmlFor="marca">Marca *</Label>
-                      <Select onValueChange={(value) => handleSelectChange("marca", value)}>
+                      <Select
+                        onValueChange={(value) =>
+                          handleSelectChange("marca", value)
+                        }
+                      >
                         <SelectTrigger>
                           <SelectValue placeholder="Selecciona la marca" />
                         </SelectTrigger>
@@ -227,7 +251,9 @@ const AvaluoPage = () => {
                           <SelectItem value="ford">Ford</SelectItem>
                           <SelectItem value="chevrolet">Chevrolet</SelectItem>
                           <SelectItem value="bmw">BMW</SelectItem>
-                          <SelectItem value="mercedes">Mercedes-Benz</SelectItem>
+                          <SelectItem value="mercedes">
+                            Mercedes-Benz
+                          </SelectItem>
                           <SelectItem value="audi">Audi</SelectItem>
                           <SelectItem value="otro">Otra</SelectItem>
                         </SelectContent>
@@ -275,7 +301,11 @@ const AvaluoPage = () => {
                     </div>
                     <div>
                       <Label htmlFor="transmision">Transmisión</Label>
-                      <Select onValueChange={(value) => handleSelectChange("transmision", value)}>
+                      <Select
+                        onValueChange={(value) =>
+                          handleSelectChange("transmision", value)
+                        }
+                      >
                         <SelectTrigger>
                           <SelectValue placeholder="Tipo" />
                         </SelectTrigger>
@@ -288,7 +318,11 @@ const AvaluoPage = () => {
                     </div>
                     <div>
                       <Label htmlFor="combustible">Combustible</Label>
-                      <Select onValueChange={(value) => handleSelectChange("combustible", value)}>
+                      <Select
+                        onValueChange={(value) =>
+                          handleSelectChange("combustible", value)
+                        }
+                      >
                         <SelectTrigger>
                           <SelectValue placeholder="Tipo" />
                         </SelectTrigger>
@@ -317,11 +351,17 @@ const AvaluoPage = () => {
 
                 {/* Estado del Vehículo */}
                 <div>
-                  <h3 className="text-xl font-bold mb-4">Estado del Vehículo</h3>
+                  <h3 className="text-xl font-bold mb-4">
+                    Estado del Vehículo
+                  </h3>
                   <div className="grid md:grid-cols-2 gap-4 mb-4">
                     <div>
                       <Label htmlFor="estadoGeneral">Estado General *</Label>
-                      <Select onValueChange={(value) => handleSelectChange("estadoGeneral", value)}>
+                      <Select
+                        onValueChange={(value) =>
+                          handleSelectChange("estadoGeneral", value)
+                        }
+                      >
                         <SelectTrigger>
                           <SelectValue placeholder="Selecciona el estado" />
                         </SelectTrigger>
@@ -330,13 +370,21 @@ const AvaluoPage = () => {
                           <SelectItem value="muy-bueno">Muy Bueno</SelectItem>
                           <SelectItem value="bueno">Bueno</SelectItem>
                           <SelectItem value="regular">Regular</SelectItem>
-                          <SelectItem value="necesita-reparaciones">Necesita Reparaciones</SelectItem>
+                          <SelectItem value="necesita-reparaciones">
+                            Necesita Reparaciones
+                          </SelectItem>
                         </SelectContent>
                       </Select>
                     </div>
                     <div>
-                      <Label htmlFor="accidentes">¿Ha tenido accidentes? *</Label>
-                      <Select onValueChange={(value) => handleSelectChange("accidentes", value)}>
+                      <Label htmlFor="accidentes">
+                        ¿Ha tenido accidentes? *
+                      </Label>
+                      <Select
+                        onValueChange={(value) =>
+                          handleSelectChange("accidentes", value)
+                        }
+                      >
                         <SelectTrigger>
                           <SelectValue placeholder="Selecciona" />
                         </SelectTrigger>
@@ -352,8 +400,14 @@ const AvaluoPage = () => {
 
                   <div className="grid md:grid-cols-2 gap-4 mb-4">
                     <div>
-                      <Label htmlFor="mantenimientos">Mantenimientos al día</Label>
-                      <Select onValueChange={(value) => handleSelectChange("mantenimientos", value)}>
+                      <Label htmlFor="mantenimientos">
+                        Mantenimientos al día
+                      </Label>
+                      <Select
+                        onValueChange={(value) =>
+                          handleSelectChange("mantenimientos", value)
+                        }
+                      >
                         <SelectTrigger>
                           <SelectValue placeholder="Selecciona" />
                         </SelectTrigger>
@@ -366,7 +420,11 @@ const AvaluoPage = () => {
                     </div>
                     <div>
                       <Label htmlFor="documentos">Documentos en regla</Label>
-                      <Select onValueChange={(value) => handleSelectChange("documentos", value)}>
+                      <Select
+                        onValueChange={(value) =>
+                          handleSelectChange("documentos", value)
+                        }
+                      >
                         <SelectTrigger>
                           <SelectValue placeholder="Selecciona" />
                         </SelectTrigger>
@@ -380,7 +438,9 @@ const AvaluoPage = () => {
                   </div>
 
                   <div>
-                    <Label htmlFor="observaciones">Observaciones Adicionales</Label>
+                    <Label htmlFor="observaciones">
+                      Observaciones Adicionales
+                    </Label>
                     <Textarea
                       id="observaciones"
                       name="observaciones"
@@ -400,13 +460,14 @@ const AvaluoPage = () => {
                     <Camera className="w-5 h-5 mr-2" />
                     Fotos del Vehículo
                   </h3>
-                  
+
                   <div className="mb-4">
                     <Label htmlFor="images">Subir Fotos (máximo 8)</Label>
                     <div className="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center">
                       <Upload className="w-12 h-12 mx-auto mb-4 text-gray-400" />
                       <p className="text-gray-600 mb-4">
-                        Arrastra y suelta las fotos aquí, o haz clic para seleccionar
+                        Arrastra y suelta las fotos aquí, o haz clic para
+                        seleccionar
                       </p>
                       <Input
                         id="images"
@@ -416,10 +477,12 @@ const AvaluoPage = () => {
                         onChange={handleImageUpload}
                         className="hidden"
                       />
-                      <Button 
-                        type="button" 
+                      <Button
+                        type="button"
                         variant="outline"
-                        onClick={() => document.getElementById('images')?.click()}
+                        onClick={() =>
+                          document.getElementById("images")?.click()
+                        }
                       >
                         Seleccionar Fotos
                       </Button>
@@ -466,17 +529,27 @@ const AvaluoPage = () => {
 
                 {/* Información de Venta */}
                 <div>
-                  <h3 className="text-xl font-bold mb-4">Información de Venta</h3>
+                  <h3 className="text-xl font-bold mb-4">
+                    Información de Venta
+                  </h3>
                   <div className="grid md:grid-cols-3 gap-4">
                     <div>
                       <Label htmlFor="razonVenta">Razón de Venta</Label>
-                      <Select onValueChange={(value) => handleSelectChange("razonVenta", value)}>
+                      <Select
+                        onValueChange={(value) =>
+                          handleSelectChange("razonVenta", value)
+                        }
+                      >
                         <SelectTrigger>
                           <SelectValue placeholder="Selecciona" />
                         </SelectTrigger>
                         <SelectContent>
-                          <SelectItem value="cambio">Cambio de vehículo</SelectItem>
-                          <SelectItem value="necesidad">Necesidad económica</SelectItem>
+                          <SelectItem value="cambio">
+                            Cambio de vehículo
+                          </SelectItem>
+                          <SelectItem value="necesidad">
+                            Necesidad económica
+                          </SelectItem>
                           <SelectItem value="mudanza">Mudanza</SelectItem>
                           <SelectItem value="otro">Otro</SelectItem>
                         </SelectContent>
@@ -484,7 +557,11 @@ const AvaluoPage = () => {
                     </div>
                     <div>
                       <Label htmlFor="tiempoVenta">Tiempo para Vender</Label>
-                      <Select onValueChange={(value) => handleSelectChange("tiempoVenta", value)}>
+                      <Select
+                        onValueChange={(value) =>
+                          handleSelectChange("tiempoVenta", value)
+                        }
+                      >
                         <SelectTrigger>
                           <SelectValue placeholder="Selecciona" />
                         </SelectTrigger>
@@ -497,7 +574,9 @@ const AvaluoPage = () => {
                       </Select>
                     </div>
                     <div>
-                      <Label htmlFor="precioEsperado">Precio Esperado (L.)</Label>
+                      <Label htmlFor="precioEsperado">
+                        Precio Esperado (L.)
+                      </Label>
                       <Input
                         id="precioEsperado"
                         name="precioEsperado"
@@ -511,7 +590,11 @@ const AvaluoPage = () => {
                 </div>
 
                 <div className="text-center">
-                  <Button type="submit" size="lg" className="bg-green-600 hover:bg-green-700 px-12">
+                  <Button
+                    type="submit"
+                    size="lg"
+                    className="bg-green-600 hover:bg-green-700 px-12"
+                  >
                     Solicitar Avalúo Gratuito
                   </Button>
                   <p className="text-sm text-gray-600 mt-2">
@@ -532,13 +615,22 @@ const AvaluoPage = () => {
               <Link to="/" className="hover:text-blue-400 transition-colors">
                 Inicio
               </Link>
-              <Link to="/catalog" className="hover:text-blue-400 transition-colors">
+              <Link
+                to="/catalog"
+                className="hover:text-blue-400 transition-colors"
+              >
                 Catálogo
               </Link>
-              <Link to="/financiamiento" className="hover:text-blue-400 transition-colors">
+              <Link
+                to="/financiamiento"
+                className="hover:text-blue-400 transition-colors"
+              >
                 Financiamiento
               </Link>
-              <Link to="/calcular-cuotas" className="hover:text-blue-400 transition-colors">
+              <Link
+                to="/calcular-cuotas"
+                className="hover:text-blue-400 transition-colors"
+              >
                 Calcular Cuotas
               </Link>
             </nav>
