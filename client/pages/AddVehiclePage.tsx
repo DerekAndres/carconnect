@@ -74,6 +74,7 @@ const AddVehiclePage = () => {
     image: '',
     features: [],
     isVisible: true, // Always true for new vehicles
+    isFeatured: false, // Default to not featured
     condition: 'Usado',
     priceType: 'Contado',
     vehicleType: 'Sedan',
