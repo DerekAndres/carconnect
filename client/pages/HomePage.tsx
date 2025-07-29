@@ -12,6 +12,7 @@ import { useVehicles } from "../context/VehicleContext";
 import Navbar from "../components/Navbar";
 
 const HomePage = () => {
+  const { vehicles } = useVehicles();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [searchFilters, setSearchFilters] = useState({
     marca: "",
@@ -20,6 +21,9 @@ const HomePage = () => {
     precio: "",
     estado: "",
   });
+
+  // Get featured vehicles (first 4 visible vehicles)
+  const featuredVehiclesData = vehicles.filter(v => v.isVisible).slice(0, 4);
 
   const featuredVehicles = [
     {
