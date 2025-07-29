@@ -86,6 +86,14 @@ export const VehicleProvider: React.FC<VehicleProviderProps> = ({
     );
   };
 
+  const updateVehicleFeatured = (vehicleId: string, isFeatured: boolean) => {
+    setVehicles((prev) =>
+      prev.map((vehicle) =>
+        vehicle.id === vehicleId ? { ...vehicle, isFeatured } : vehicle,
+      ),
+    );
+  };
+
   const toggleAllVehiclesVisibility = (isVisible: boolean) => {
     setVehicles((prev) =>
       prev.map((vehicle) => ({
