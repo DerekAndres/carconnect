@@ -74,7 +74,7 @@ const SearchFilterBar: React.FC = () => {
             type="text"
             value={searchText}
             onChange={(e) => setSearchText(e.target.value)}
-            placeholder="Buscar por marca, modelo, descripción..."
+            placeholder="Buscar Toyota, Honda, Camry, V6..."
             className="bg-transparent text-white placeholder-white/70 outline-none flex-1"
           />
         </div>
