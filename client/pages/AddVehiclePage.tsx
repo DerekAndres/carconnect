@@ -177,9 +177,9 @@ const AddVehiclePage = () => {
       ...formData,
       features: selectedFeaturesList,
       image: images[0] || formData.image,
-      // Convert empty strings back to numbers for numeric fields
-      price: typeof formData.price === 'string' ? parseFloat(formData.price) || 0 : formData.price,
-      mileage: typeof formData.mileage === 'string' ? parseFloat(formData.mileage) || 0 : formData.mileage,
+      // Convert strings back to numbers for numeric fields, preserving full values
+      price: typeof formData.price === 'string' ? (formData.price === '' ? 0 : parseFloat(formData.price.replace(/,/g, ''))) : formData.price,
+      mileage: typeof formData.mileage === 'string' ? (formData.mileage === '' ? 0 : parseFloat(formData.mileage.replace(/,/g, ''))) : formData.mileage,
       year: typeof formData.year === 'string' ? parseInt(formData.year) || new Date().getFullYear() : formData.year
     };
 
