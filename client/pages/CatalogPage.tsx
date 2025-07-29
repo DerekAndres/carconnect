@@ -6,11 +6,20 @@ import SearchFilterBar from "../components/SearchFilterBar";
 import Navbar from "../components/Navbar";
 
 const CatalogPage = () => {
-  const { vehicles, filters, filteredVehicles: globalFilteredVehicles, setFilters } = useVehicles();
+  const {
+    vehicles,
+    filters,
+    filteredVehicles: globalFilteredVehicles,
+    setFilters,
+  } = useVehicles();
   const [searchParams] = useSearchParams();
   const [showingCount, setShowingCount] = useState(8);
 
-  const vehicleTypeFilter = searchParams.get('type') as 'SUV' | 'Sedan' | 'Pickup' | null;
+  const vehicleTypeFilter = searchParams.get("type") as
+    | "SUV"
+    | "Sedan"
+    | "Pickup"
+    | null;
 
   // Use global filtered vehicles and also filter by visibility and URL params
   const filteredVehicles = globalFilteredVehicles.filter((v) => {
@@ -33,12 +42,13 @@ const CatalogPage = () => {
   };
 
   const getHeaderText = () => {
-    const hasFilters = vehicleTypeFilter ||
-                      filters.searchText ||
-                      filters.make ||
-                      filters.model ||
-                      filters.year ||
-                      filters.condition;
+    const hasFilters =
+      vehicleTypeFilter ||
+      filters.searchText ||
+      filters.make ||
+      filters.model ||
+      filters.year ||
+      filters.condition;
 
     if (vehicleTypeFilter) {
       return `Mostrando: ${vehicleTypeFilter}s`;
@@ -47,24 +57,26 @@ const CatalogPage = () => {
       return `Resultados para: "${filters.searchText}"`;
     }
     if (filters.make || filters.model) {
-      return `Mostrando: ${filters.make || ''} ${filters.model || ''}`.trim();
+      return `Mostrando: ${filters.make || ""} ${filters.model || ""}`.trim();
     }
-    return 'Mostrando: Todos';
+    return "Mostrando: Todos";
   };
 
   const hasActiveFilters = () => {
-    return vehicleTypeFilter ||
-           filters.searchText ||
-           filters.make ||
-           filters.model ||
-           filters.year ||
-           filters.condition;
+    return (
+      vehicleTypeFilter ||
+      filters.searchText ||
+      filters.make ||
+      filters.model ||
+      filters.year ||
+      filters.condition
+    );
   };
 
   const clearAllFilters = () => {
     setFilters({});
     // Also clear URL params
-    window.history.pushState({}, '', '/catalog');
+    window.history.pushState({}, "", "/catalog");
   };
 
   return (
@@ -94,7 +106,9 @@ const CatalogPage = () => {
               <span className="text-2xl font-medium">{getHeaderText()}</span>
               {hasActiveFilters() && (
                 <div className="mt-2 text-sm text-gray-600">
-                  {filteredVehicles.length} vehículo{filteredVehicles.length !== 1 ? 's' : ''} encontrado{filteredVehicles.length !== 1 ? 's' : ''}
+                  {filteredVehicles.length} vehículo
+                  {filteredVehicles.length !== 1 ? "s" : ""} encontrado
+                  {filteredVehicles.length !== 1 ? "s" : ""}
                 </div>
               )}
             </div>
@@ -158,16 +172,16 @@ const CatalogPage = () => {
                     <hr className="mb-4" />
 
                     <div className="flex items-center justify-between">
-                    <span className="text-green-600 text-2xl font-bold">
-                      L. {vehicle.price.toLocaleString()}
-                    </span>
-                    <Link
-                      to={`/vehicle/${vehicle.id}`}
-                      className="text-blue-600 hover:text-blue-800 font-medium"
-                    >
-                      Ver detalles
-                    </Link>
-                  </div>
+                      <span className="text-green-600 text-2xl font-bold">
+                        L. {vehicle.price.toLocaleString()}
+                      </span>
+                      <Link
+                        to={`/vehicle/${vehicle.id}`}
+                        className="text-blue-600 hover:text-blue-800 font-medium"
+                      >
+                        Ver detalles
+                      </Link>
+                    </div>
                   </div>
                 </div>
               ))}

@@ -3,19 +3,19 @@
 // Para manejar subida de imágenes y videos
 // ========================================
 
-const multer = require('multer');
-const path = require('path');
-const fs = require('fs');
-const sharp = require('sharp'); // Para optimización de imágenes
-const ffmpeg = require('fluent-ffmpeg'); // Para procesamiento de videos
+const multer = require("multer");
+const path = require("path");
+const fs = require("fs");
+const sharp = require("sharp"); // Para optimización de imágenes
+const ffmpeg = require("fluent-ffmpeg"); // Para procesamiento de videos
 
 // Configuración de directorios
-const UPLOAD_DIR = path.join(__dirname, '../../uploads');
-const VEHICLE_IMAGES_DIR = path.join(UPLOAD_DIR, 'vehicles/images');
-const VEHICLE_VIDEOS_DIR = path.join(UPLOAD_DIR, 'vehicles/videos');
+const UPLOAD_DIR = path.join(__dirname, "../../uploads");
+const VEHICLE_IMAGES_DIR = path.join(UPLOAD_DIR, "vehicles/images");
+const VEHICLE_VIDEOS_DIR = path.join(UPLOAD_DIR, "vehicles/videos");
 
 // Crear directorios si no existen
-[UPLOAD_DIR, VEHICLE_IMAGES_DIR, VEHICLE_VIDEOS_DIR].forEach(dir => {
+[UPLOAD_DIR, VEHICLE_IMAGES_DIR, VEHICLE_VIDEOS_DIR].forEach((dir) => {
   if (!fs.existsSync(dir)) {
     fs.mkdirSync(dir, { recursive: true });
   }
@@ -24,37 +24,43 @@ const VEHICLE_VIDEOS_DIR = path.join(UPLOAD_DIR, 'vehicles/videos');
 // Configuración de almacenamiento
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    const isVideo = file.mimetype.startsWith('video/');
+    const isVideo = file.mimetype.startsWith("video/");
     const uploadPath = isVideo ? VEHICLE_VIDEOS_DIR : VEHICLE_IMAGES_DIR;
     cb(null, uploadPath);
   },
   filename: (req, file, cb) => {
     // Generar nombre único: timestamp_random_originalname
     const timestamp = Date.now();
-    const random = Math.round(Math.random() * 1E9);
+    const random = Math.round(Math.random() * 1e9);
     const extension = path.extname(file.originalname);
     const baseName = path.basename(file.originalname, extension);
-    const sanitizedBaseName = baseName.replace(/[^a-zA-Z0-9]/g, '_');
-    
+    const sanitizedBaseName = baseName.replace(/[^a-zA-Z0-9]/g, "_");
+
     const filename = `${timestamp}_${random}_${sanitizedBaseName}${extension}`;
     cb(null, filename);
-  }
+  },
 });
 
 // Filtros de archivos
 const fileFilter = (req, file, cb) => {
   const allowedImageTypes = /jpeg|jpg|png|gif|webp/;
   const allowedVideoTypes = /mp4|mov|avi|wmv|flv|webm/;
-  
-  const extname = allowedImageTypes.test(path.extname(file.originalname).toLowerCase()) ||
-                  allowedVideoTypes.test(path.extname(file.originalname).toLowerCase());
-  
-  const mimetype = file.mimetype.startsWith('image/') || file.mimetype.startsWith('video/');
-  
+
+  const extname =
+    allowedImageTypes.test(path.extname(file.originalname).toLowerCase()) ||
+    allowedVideoTypes.test(path.extname(file.originalname).toLowerCase());
+
+  const mimetype =
+    file.mimetype.startsWith("image/") || file.mimetype.startsWith("video/");
+
   if (mimetype && extname) {
     return cb(null, true);
   } else {
-    cb(new Error('Solo se permiten archivos de imagen (JPG, PNG, GIF, WebP) y video (MP4, MOV, AVI, WMV, FLV, WebM)'));
+    cb(
+      new Error(
+        "Solo se permiten archivos de imagen (JPG, PNG, GIF, WebP) y video (MP4, MOV, AVI, WMV, FLV, WebM)",
+      ),
+    );
   }
 };
 
@@ -63,9 +69,9 @@ const upload = multer({
   storage: storage,
   limits: {
     fileSize: 10 * 1024 * 1024, // 10MB
-    files: 10 // Máximo 10 archivos por vez
+    files: 10, // Máximo 10 archivos por vez
   },
-  fileFilter: fileFilter
+  fileFilter: fileFilter,
 });
 
 // Funciones de procesamiento de imágenes
@@ -75,7 +81,7 @@ const processImage = async (filePath, options = {}) => {
       width = 1200,
       height = 800,
       quality = 85,
-      createThumbnail = true
+      createThumbnail = true,
     } = options;
 
     const dir = path.dirname(filePath);
@@ -85,7 +91,7 @@ const processImage = async (filePath, options = {}) => {
     // Procesar imagen principal
     const processedPath = path.join(dir, `${filename}_processed${extension}`);
     await sharp(filePath)
-      .resize(width, height, { fit: 'inside', withoutEnlargement: true })
+      .resize(width, height, { fit: "inside", withoutEnlargement: true })
       .jpeg({ quality })
       .toFile(processedPath);
 
@@ -94,7 +100,7 @@ const processImage = async (filePath, options = {}) => {
     if (createThumbnail) {
       thumbnailPath = path.join(dir, `${filename}_thumb${extension}`);
       await sharp(filePath)
-        .resize(300, 200, { fit: 'cover' })
+        .resize(300, 200, { fit: "cover" })
         .jpeg({ quality: 80 })
         .toFile(thumbnailPath);
     }
@@ -110,11 +116,11 @@ const processImage = async (filePath, options = {}) => {
         width: metadata.width,
         height: metadata.height,
         format: metadata.format,
-        size: fs.statSync(filePath).size
-      }
+        size: fs.statSync(filePath).size,
+      },
     };
   } catch (error) {
-    console.error('Error procesando imagen:', error);
+    console.error("Error procesando imagen:", error);
     throw error;
   }
 };
@@ -128,15 +134,15 @@ const processVideo = async (filePath, options = {}) => {
     return new Promise((resolve, reject) => {
       // Crear thumbnail del video
       const thumbnailPath = path.join(dir, `${filename}_thumb.jpg`);
-      
+
       ffmpeg(filePath)
         .screenshots({
           count: 1,
           folder: dir,
           filename: `${filename}_thumb.jpg`,
-          timemarks: ['2'] // Tomar screenshot a los 2 segundos
+          timemarks: ["2"], // Tomar screenshot a los 2 segundos
         })
-        .on('end', async () => {
+        .on("end", async () => {
           try {
             // Obtener metadatos del video
             ffmpeg.ffprobe(filePath, (err, metadata) => {
@@ -145,7 +151,9 @@ const processVideo = async (filePath, options = {}) => {
                 return;
               }
 
-              const videoStream = metadata.streams.find(stream => stream.codec_type === 'video');
+              const videoStream = metadata.streams.find(
+                (stream) => stream.codec_type === "video",
+              );
               const stats = fs.statSync(filePath);
 
               resolve({
@@ -156,24 +164,24 @@ const processVideo = async (filePath, options = {}) => {
                   height: videoStream?.height || 0,
                   duration: metadata.format.duration || 0,
                   format: metadata.format.format_name,
-                  size: stats.size
-                }
+                  size: stats.size,
+                },
               });
             });
           } catch (error) {
             reject(error);
           }
         })
-        .on('error', reject);
+        .on("error", reject);
     });
   } catch (error) {
-    console.error('Error procesando video:', error);
+    console.error("Error procesando video:", error);
     throw error;
   }
 };
 
 // Middleware para manejar subida de múltiples archivos
-const uploadVehicleMedia = upload.array('vehicleMedia', 10);
+const uploadVehicleMedia = upload.array("vehicleMedia", 10);
 
 // Función para procesar archivos subidos
 const processUploadedFiles = async (files, vehicleId) => {
@@ -181,16 +189,16 @@ const processUploadedFiles = async (files, vehicleId) => {
 
   for (let i = 0; i < files.length; i++) {
     const file = files[i];
-    const isVideo = file.mimetype.startsWith('video/');
-    
+    const isVideo = file.mimetype.startsWith("video/");
+
     try {
       let processedData;
-      
+
       if (isVideo) {
         processedData = await processVideo(file.path);
       } else {
         processedData = await processImage(file.path, {
-          createThumbnail: true
+          createThumbnail: true,
         });
       }
 
@@ -200,12 +208,11 @@ const processUploadedFiles = async (files, vehicleId) => {
         path: file.path,
         size: file.size,
         mimetype: file.mimetype,
-        type: isVideo ? 'video' : 'image',
+        type: isVideo ? "video" : "image",
         vehicleId: vehicleId,
         isPrimary: i === 0, // Primer archivo es principal
-        ...processedData
+        ...processedData,
       });
-
     } catch (error) {
       console.error(`Error procesando archivo ${file.filename}:`, error);
       // Continuar con otros archivos aunque uno falle
@@ -224,14 +231,14 @@ const deleteFile = (filePath) => {
     }
     return false;
   } catch (error) {
-    console.error('Error eliminando archivo:', error);
+    console.error("Error eliminando archivo:", error);
     return false;
   }
 };
 
 // Función para eliminar archivos de un vehículo
 const deleteVehicleFiles = (vehicleFiles) => {
-  vehicleFiles.forEach(file => {
+  vehicleFiles.forEach((file) => {
     deleteFile(file.path);
     if (file.processedPath) deleteFile(file.processedPath);
     if (file.thumbnailPath) deleteFile(file.thumbnailPath);
@@ -241,7 +248,7 @@ const deleteVehicleFiles = (vehicleFiles) => {
 // Función para obtener URL pública del archivo
 const getFileUrl = (filePath, req) => {
   const relativePath = path.relative(UPLOAD_DIR, filePath);
-  return `${req.protocol}://${req.get('host')}/uploads/${relativePath.replace(/\\/g, '/')}`;
+  return `${req.protocol}://${req.get("host")}/uploads/${relativePath.replace(/\\/g, "/")}`;
 };
 
 module.exports = {
@@ -254,7 +261,7 @@ module.exports = {
   getFileUrl,
   UPLOAD_DIR,
   VEHICLE_IMAGES_DIR,
-  VEHICLE_VIDEOS_DIR
+  VEHICLE_VIDEOS_DIR,
 };
 
 // ========================================

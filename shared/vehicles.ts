@@ -20,7 +20,7 @@ export interface Vehicle {
     fechaLlegadaHonduras?: string;
     fechaSalidaEEUU?: string;
     estadoCompraEEUU?: string;
-    paginaWebCompra?: 'Copart' | 'IAAI' | 'Otro';
+    paginaWebCompra?: "Copart" | "IAAI" | "Otro";
     nombreEnPapeles?: string;
     costoChocado?: number;
     costoReparado?: number | null; // null means N/A

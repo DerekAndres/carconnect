@@ -24,7 +24,9 @@ const HomePage = () => {
   });
 
   // Get featured vehicles (vehicles marked as featured and visible)
-  const featuredVehiclesData = vehicles.filter(v => v.isVisible && v.isFeatured).slice(0, 4);
+  const featuredVehiclesData = vehicles
+    .filter((v) => v.isVisible && v.isFeatured)
+    .slice(0, 4);
 
   const featuredVehicles = [
     {
@@ -142,7 +144,9 @@ const HomePage = () => {
                   className="w-full h-full object-cover group-hover:brightness-110 transition-all"
                 />
               </div>
-              <h3 className="text-xl font-semibold group-hover:text-blue-600 transition-colors">{type.name}</h3>
+              <h3 className="text-xl font-semibold group-hover:text-blue-600 transition-colors">
+                {type.name}
+              </h3>
             </Link>
           ))}
         </div>
@@ -196,7 +200,9 @@ const HomePage = () => {
               </div>
 
               <div className="p-6">
-                <h3 className="text-xl font-bold mb-2">{vehicle.make} {vehicle.model} {vehicle.year}</h3>
+                <h3 className="text-xl font-bold mb-2">
+                  {vehicle.make} {vehicle.model} {vehicle.year}
+                </h3>
                 <p className="text-gray-600 text-sm mb-4">
                   {vehicle.description}
                 </p>

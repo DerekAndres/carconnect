@@ -1,32 +1,46 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
-import { Search, ChevronDown } from 'lucide-react';
-import { useVehicles } from '../context/VehicleContext';
+import React, { useState, useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
+import { Search, ChevronDown } from "lucide-react";
+import { useVehicles } from "../context/VehicleContext";
 
 interface SearchFilterBarProps {
   redirectToCatalog?: boolean;
 }
 
-const SearchFilterBar: React.FC<SearchFilterBarProps> = ({ redirectToCatalog = false }) => {
+const SearchFilterBar: React.FC<SearchFilterBarProps> = ({
+  redirectToCatalog = false,
+}) => {
   const navigate = useNavigate();
   const location = useLocation();
   const { vehicles, filters, setFilters } = useVehicles();
-  const [searchText, setSearchText] = useState(filters.searchText || '');
-  const [selectedMake, setSelectedMake] = useState(filters.make || '');
-  const [selectedModel, setSelectedModel] = useState(filters.model || '');
-  const [selectedYear, setSelectedYear] = useState(filters.year?.toString() || '');
-  const [selectedCondition, setSelectedCondition] = useState(filters.condition || '');
+  const [searchText, setSearchText] = useState(filters.searchText || "");
+  const [selectedMake, setSelectedMake] = useState(filters.make || "");
+  const [selectedModel, setSelectedModel] = useState(filters.model || "");
+  const [selectedYear, setSelectedYear] = useState(
+    filters.year?.toString() || "",
+  );
+  const [selectedCondition, setSelectedCondition] = useState(
+    filters.condition || "",
+  );
 
   // Get unique makes from vehicles
-  const availableMakes = Array.from(new Set(vehicles.map(v => v.make))).sort();
-  
+  const availableMakes = Array.from(
+    new Set(vehicles.map((v) => v.make)),
+  ).sort();
+
   // Get models based on selected make
-  const availableModels = selectedMake 
-    ? Array.from(new Set(vehicles.filter(v => v.make === selectedMake).map(v => v.model))).sort()
+  const availableModels = selectedMake
+    ? Array.from(
+        new Set(
+          vehicles.filter((v) => v.make === selectedMake).map((v) => v.model),
+        ),
+      ).sort()
     : [];
 
   // Get available years
-  const availableYears = Array.from(new Set(vehicles.map(v => v.year))).sort((a, b) => b - a);
+  const availableYears = Array.from(new Set(vehicles.map((v) => v.year))).sort(
+    (a, b) => b - a,
+  );
 
   const handleSearch = () => {
     const newFilters = {
@@ -35,52 +49,55 @@ const SearchFilterBar: React.FC<SearchFilterBarProps> = ({ redirectToCatalog = f
       make: selectedMake || undefined,
       model: selectedModel || undefined,
       year: selectedYear ? parseInt(selectedYear) : undefined,
-      condition: selectedCondition || undefined
+      condition: selectedCondition || undefined,
     };
 
     setFilters(newFilters);
 
     // If we're on homepage, redirect to catalog after setting filters
-    if (location.pathname === '/' || redirectToCatalog) {
+    if (location.pathname === "/" || redirectToCatalog) {
       // Use a small delay to ensure filters are set before navigation
       setTimeout(() => {
-        navigate('/catalog');
+        navigate("/catalog");
       }, 100);
     }
   };
 
   const handleClear = () => {
-    setSearchText('');
-    setSelectedMake('');
-    setSelectedModel('');
-    setSelectedYear('');
-    setSelectedCondition('');
+    setSearchText("");
+    setSelectedMake("");
+    setSelectedModel("");
+    setSelectedYear("");
+    setSelectedCondition("");
     setFilters({
-      vehicleType: filters.vehicleType // Keep vehicle type filter if it exists
+      vehicleType: filters.vehicleType, // Keep vehicle type filter if it exists
     });
   };
 
   // Clear model when make changes
   useEffect(() => {
     if (selectedMake && !availableModels.includes(selectedModel)) {
-      setSelectedModel('');
+      setSelectedModel("");
     }
   }, [selectedMake, selectedModel, availableModels]);
 
   // Auto-search as user types (debounced)
   useEffect(() => {
     const timeoutId = setTimeout(() => {
-      if (searchText !== (filters.searchText || '')) {
+      if (searchText !== (filters.searchText || "")) {
         const newFilters = {
           vehicleType: filters.vehicleType, // Keep vehicle type filter
-          searchText: searchText.trim() || undefined
+          searchText: searchText.trim() || undefined,
         };
         setFilters(newFilters);
 
         // If we're on homepage and there's search text, redirect to catalog
-        if ((location.pathname === '/' || redirectToCatalog) && searchText.trim()) {
+        if (
+          (location.pathname === "/" || redirectToCatalog) &&
+          searchText.trim()
+        ) {
           setTimeout(() => {
-            navigate('/catalog');
+            navigate("/catalog");
           }, 100);
         }
       }
@@ -114,7 +131,9 @@ const SearchFilterBar: React.FC<SearchFilterBarProps> = ({ redirectToCatalog = f
             onChange={(e) => setSelectedMake(e.target.value)}
             className="w-full bg-white/20 text-white rounded-full px-4 py-3 outline-none appearance-none cursor-pointer"
           >
-            <option value="" className="text-gray-800">Todas las Marcas</option>
+            <option value="" className="text-gray-800">
+              Todas las Marcas
+            </option>
             {availableMakes.map((make) => (
               <option key={make} value={make} className="text-gray-800">
                 {make}
@@ -133,7 +152,7 @@ const SearchFilterBar: React.FC<SearchFilterBarProps> = ({ redirectToCatalog = f
             className="w-full bg-white/20 text-white rounded-full px-4 py-3 outline-none appearance-none cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
           >
             <option value="" className="text-gray-800">
-              {selectedMake ? 'Todos los Modelos' : 'Selecciona Marca'}
+              {selectedMake ? "Todos los Modelos" : "Selecciona Marca"}
             </option>
             {availableModels.map((model) => (
               <option key={model} value={model} className="text-gray-800">
@@ -151,7 +170,9 @@ const SearchFilterBar: React.FC<SearchFilterBarProps> = ({ redirectToCatalog = f
             onChange={(e) => setSelectedYear(e.target.value)}
             className="w-full bg-white/20 text-white rounded-full px-4 py-3 outline-none appearance-none cursor-pointer"
           >
-            <option value="" className="text-gray-800">Todos los Años</option>
+            <option value="" className="text-gray-800">
+              Todos los Años
+            </option>
             {availableYears.map((year) => (
               <option key={year} value={year} className="text-gray-800">
                 {year}
@@ -168,9 +189,15 @@ const SearchFilterBar: React.FC<SearchFilterBarProps> = ({ redirectToCatalog = f
             onChange={(e) => setSelectedCondition(e.target.value)}
             className="w-full bg-white/20 text-white rounded-full px-4 py-3 outline-none appearance-none cursor-pointer"
           >
-            <option value="" className="text-gray-800">Todas las Condiciones</option>
-            <option value="Nuevo" className="text-gray-800">Nuevo</option>
-            <option value="Usado" className="text-gray-800">Usado</option>
+            <option value="" className="text-gray-800">
+              Todas las Condiciones
+            </option>
+            <option value="Nuevo" className="text-gray-800">
+              Nuevo
+            </option>
+            <option value="Usado" className="text-gray-800">
+              Usado
+            </option>
           </select>
           <ChevronDown className="absolute right-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-white pointer-events-none" />
         </div>
@@ -202,7 +229,9 @@ const SearchFilterBar: React.FC<SearchFilterBarProps> = ({ redirectToCatalog = f
               onChange={(e) => setSelectedMake(e.target.value)}
               className="w-full bg-white/20 text-white rounded-lg px-3 py-2 outline-none appearance-none cursor-pointer text-sm"
             >
-              <option value="" className="text-gray-800">Marca</option>
+              <option value="" className="text-gray-800">
+                Marca
+              </option>
               {availableMakes.map((make) => (
                 <option key={make} value={make} className="text-gray-800">
                   {make}
@@ -221,7 +250,7 @@ const SearchFilterBar: React.FC<SearchFilterBarProps> = ({ redirectToCatalog = f
               className="w-full bg-white/20 text-white rounded-lg px-3 py-2 outline-none appearance-none cursor-pointer disabled:opacity-50 text-sm"
             >
               <option value="" className="text-gray-800">
-                {selectedMake ? 'Modelo' : 'Marca'}
+                {selectedMake ? "Modelo" : "Marca"}
               </option>
               {availableModels.map((model) => (
                 <option key={model} value={model} className="text-gray-800">
@@ -241,7 +270,9 @@ const SearchFilterBar: React.FC<SearchFilterBarProps> = ({ redirectToCatalog = f
               onChange={(e) => setSelectedYear(e.target.value)}
               className="w-full bg-white/20 text-white rounded-lg px-3 py-2 outline-none appearance-none cursor-pointer text-sm"
             >
-              <option value="" className="text-gray-800">Año</option>
+              <option value="" className="text-gray-800">
+                Año
+              </option>
               {availableYears.map((year) => (
                 <option key={year} value={year} className="text-gray-800">
                   {year}
@@ -258,9 +289,15 @@ const SearchFilterBar: React.FC<SearchFilterBarProps> = ({ redirectToCatalog = f
               onChange={(e) => setSelectedCondition(e.target.value)}
               className="w-full bg-white/20 text-white rounded-lg px-3 py-2 outline-none appearance-none cursor-pointer text-sm"
             >
-              <option value="" className="text-gray-800">Condición</option>
-              <option value="Nuevo" className="text-gray-800">Nuevo</option>
-              <option value="Usado" className="text-gray-800">Usado</option>
+              <option value="" className="text-gray-800">
+                Condición
+              </option>
+              <option value="Nuevo" className="text-gray-800">
+                Nuevo
+              </option>
+              <option value="Usado" className="text-gray-800">
+                Usado
+              </option>
             </select>
             <ChevronDown className="absolute right-2 top-1/2 transform -translate-y-1/2 w-4 h-4 text-white pointer-events-none" />
           </div>
