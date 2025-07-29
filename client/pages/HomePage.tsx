@@ -121,7 +121,7 @@ const HomePage = () => {
 
         {/* Functional Search Bar */}
         <div className="absolute bottom-32 left-1/2 transform -translate-x-1/2 w-full max-w-6xl px-4">
-          <HomeSearchBar />
+          <SearchFilterBar />
         </div>
       </div>
 
