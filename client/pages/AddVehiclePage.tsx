@@ -146,29 +146,62 @@ const AddVehiclePage = () => {
     }));
   };
 
-  const handleImageChange = (index: number, value: string) => {
-    const newImages = [...images];
-    newImages[index] = value;
-    setImages(newImages);
-    
-    // Update main image if it's the first one
-    if (index === 0) {
-      setFormData(prev => ({ ...prev, image: value }));
-    }
-  };
+  const handleFileChange = (index: number, file: File | null) => {
+    const newMediaFiles = [...mediaFiles];
 
-  const addImageField = () => {
-    setImages([...images, '']);
-  };
+    if (file) {
+      const fileType = file.type.startsWith('image/') ? 'image' : 'video';
+      const preview = URL.createObjectURL(file);
 
-  const removeImageField = (index: number) => {
-    if (images.length > 1) {
-      const newImages = images.filter((_, i) => i !== index);
-      setImages(newImages);
-      if (index === 0 && newImages.length > 0) {
-        setFormData(prev => ({ ...prev, image: newImages[0] }));
+      newMediaFiles[index] = {
+        file,
+        preview,
+        type: fileType,
+        isPrimary: index === 0 // First image is always primary
+      };
+
+      // Update main image if it's the first one
+      if (index === 0) {
+        setFormData(prev => ({ ...prev, image: preview }));
       }
+    } else {
+      newMediaFiles[index] = { file: null, preview: '', type: 'image', isPrimary: index === 0 };
     }
+
+    setMediaFiles(newMediaFiles);
+  };
+
+  const addMediaField = () => {
+    setMediaFiles([...mediaFiles, { file: null, preview: '', type: 'image', isPrimary: false }]);
+  };
+
+  const removeMediaField = (index: number) => {
+    if (mediaFiles.length > 1) {
+      const newMediaFiles = mediaFiles.filter((_, i) => i !== index);
+
+      // If removing primary image, make first one primary
+      if (index === 0 && newMediaFiles.length > 0) {
+        newMediaFiles[0].isPrimary = true;
+        if (newMediaFiles[0].preview) {
+          setFormData(prev => ({ ...prev, image: newMediaFiles[0].preview }));
+        }
+      }
+
+      setMediaFiles(newMediaFiles);
+    }
+  };
+
+  const setPrimaryMedia = (index: number) => {
+    const newMediaFiles = [...mediaFiles];
+    newMediaFiles.forEach((media, i) => {
+      media.isPrimary = i === index;
+    });
+
+    if (newMediaFiles[index].preview) {
+      setFormData(prev => ({ ...prev, image: newMediaFiles[index].preview }));
+    }
+
+    setMediaFiles(newMediaFiles);
   };
 
   const handleSubmit = (e: React.FormEvent) => {
