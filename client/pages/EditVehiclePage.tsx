@@ -101,6 +101,7 @@ const EditVehiclePage = () => {
         image: vehicleToEdit.image,
         features: vehicleToEdit.features,
         isVisible: vehicleToEdit.isVisible,
+        isFeatured: vehicleToEdit.isFeatured || false,
         condition: vehicleToEdit.condition,
         priceType: vehicleToEdit.priceType,
         vehicleType: vehicleToEdit.vehicleType || 'Sedan'
