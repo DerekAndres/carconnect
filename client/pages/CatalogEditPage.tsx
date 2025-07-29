@@ -10,11 +10,13 @@ const CatalogEditPage = () => {
   const {
     vehicles,
     updateVehicleVisibility,
+    updateVehicleFeatured,
     toggleAllVehiclesVisibility,
     addVehicle,
   } = useVehicles();
   const [selectAll, setSelectAll] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [showFeaturedManagement, setShowFeaturedManagement] = useState(false);
 
   const toggleVehicleVisibility = (vehicleId: string) => {
     const vehicle = vehicles.find((v) => v.id === vehicleId);
