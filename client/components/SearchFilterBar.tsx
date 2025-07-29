@@ -55,7 +55,7 @@ const SearchFilterBar: React.FC = () => {
     const timeoutId = setTimeout(() => {
       if (searchText !== (filters.searchText || '')) {
         setFilters({
-          ...filters,
+          vehicleType: filters.vehicleType, // Keep vehicle type filter
           searchText: searchText.trim() || undefined
         });
       }
