@@ -11,6 +11,7 @@ export interface Vehicle {
   image: string;
   features: string[];
   isVisible: boolean;
+  isFeatured?: boolean; // For "Podrian Interesarte" section
   condition: "Nuevo" | "Usado";
   priceType: "Contado" | "Financiado";
   vehicleType: "SUV" | "Sedan" | "Pickup";
