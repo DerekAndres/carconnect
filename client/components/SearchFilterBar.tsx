@@ -1,8 +1,15 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { Search, ChevronDown } from 'lucide-react';
 import { useVehicles } from '../context/VehicleContext';
 
-const SearchFilterBar: React.FC = () => {
+interface SearchFilterBarProps {
+  redirectToCatalog?: boolean;
+}
+
+const SearchFilterBar: React.FC<SearchFilterBarProps> = ({ redirectToCatalog = false }) => {
+  const navigate = useNavigate();
+  const location = useLocation();
   const { vehicles, filters, setFilters } = useVehicles();
   const [searchText, setSearchText] = useState(filters.searchText || '');
   const [selectedMake, setSelectedMake] = useState(filters.make || '');
