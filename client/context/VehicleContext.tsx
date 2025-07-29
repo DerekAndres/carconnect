@@ -8,6 +8,7 @@ interface VehicleContextType {
   setFilters: React.Dispatch<React.SetStateAction<VehicleFilters>>;
   filteredVehicles: Vehicle[];
   updateVehicleVisibility: (vehicleId: string, isVisible: boolean) => void;
+  updateVehicleFeatured: (vehicleId: string, isFeatured: boolean) => void;
   toggleAllVehiclesVisibility: (isVisible: boolean) => void;
   addVehicle: (vehicle: Omit<Vehicle, "id">) => void;
 }
