@@ -66,7 +66,7 @@ const FinanciamientoPage = () => {
       {/* Hero Section */}
       <div className="relative bg-gradient-to-r from-blue-600 to-blue-800 text-white">
         <Navbar currentPage="home" />
-        
+
         <div className="container mx-auto px-4 py-20">
           <div className="text-center max-w-4xl mx-auto">
             <h1 className="text-5xl font-bold mb-6">
@@ -75,20 +75,6 @@ const FinanciamientoPage = () => {
             <p className="text-xl mb-8">
               Te ayudamos a conseguir el mejor financiamiento para tu vehículo ideal
             </p>
-            <div className="flex flex-wrap justify-center gap-4">
-              <Link to="/calcular-cuotas">
-                <Button size="lg" variant="secondary" className="bg-white text-blue-600 hover:bg-gray-100">
-                  <Calculator className="w-5 h-5 mr-2" />
-                  Calcular Cuotas
-                </Button>
-              </Link>
-              <Link to="/avaluo">
-                <Button size="lg" variant="outline" className="border-white text-white hover:bg-white hover:text-blue-600">
-                  <DollarSign className="w-5 h-5 mr-2" />
-                  Evaluar Trade-in
-                </Button>
-              </Link>
-            </div>
           </div>
         </div>
       </div>
