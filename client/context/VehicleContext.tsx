@@ -118,6 +118,7 @@ export const VehicleProvider: React.FC<VehicleProviderProps> = ({
     setFilters,
     filteredVehicles,
     updateVehicleVisibility,
+    updateVehicleFeatured,
     toggleAllVehiclesVisibility,
     addVehicle,
   };
