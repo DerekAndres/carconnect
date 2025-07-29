@@ -493,6 +493,67 @@ const AddVehiclePage = () => {
               </div>
             </div>
 
+            {/* Price Configuration Section */}
+            <div className="bg-blue-50 border border-blue-200 rounded-lg p-6 shadow-lg">
+              <h2 className="text-xl font-bold text-gray-900 mb-6 flex items-center">
+                <span className="bg-blue-400 text-blue-900 px-2 py-1 rounded text-sm mr-3">PRECIO</span>
+                Configuración de Precio de Venta
+              </h2>
+
+              <div className="space-y-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Seleccionar Fuente de Precio *
+                  </label>
+                  <select
+                    value={priceSource}
+                    onChange={(e) => handlePriceSourceChange(e.target.value as 'chocado' | 'reparado')}
+                    className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white"
+                  >
+                    <option value="chocado">Usar Costo Venta Chocado</option>
+                    <option value="reparado">Usar Costo Venta Reparado</option>
+                  </select>
+                  <p className="text-xs text-gray-600 mt-1">
+                    El precio del vehículo se tomará automáticamente del valor seleccionado en la sección administrativa
+                  </p>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Precio Final del Vehículo (L.)
+                  </label>
+                  <input
+                    type="text"
+                    name="price"
+                    value={`L. ${formData.price.toLocaleString()}`}
+                    readOnly
+                    className="w-full border border-gray-300 rounded-lg px-3 py-2 bg-gray-100 text-gray-700 cursor-not-allowed font-bold text-lg"
+                  />
+                  <p className="text-xs text-blue-600 mt-1">
+                    💡 Este precio se actualiza automáticamente cuando cambias los valores en la sección administrativa
+                  </p>
+                </div>
+
+                <div className="bg-blue-100 border border-blue-300 rounded-lg p-4">
+                  <h4 className="font-semibold text-blue-900 mb-2">Configuración Actual:</h4>
+                  <div className="text-sm text-blue-800">
+                    <p>
+                      <strong>Fuente:</strong> {priceSource === 'chocado' ? 'Costo Venta Chocado' : 'Costo Venta Reparado'}
+                    </p>
+                    <p>
+                      <strong>Valor en Admin:</strong> L. {priceSource === 'chocado'
+                        ? (formData.adminData?.costoVentaChocado || 0).toLocaleString()
+                        : (formData.adminData?.costoVentaReparado || 0).toLocaleString()
+                      }
+                    </p>
+                    <p className="mt-2 text-xs">
+                      Para cambiar el precio, actualiza los valores en la sección "Información Administrativa" arriba.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
             {/* Images Section */}
             <div className="bg-white rounded-lg p-6 shadow-lg">
               <h2 className="text-xl font-bold text-gray-900 mb-6">Imágenes del Vehículo</h2>
