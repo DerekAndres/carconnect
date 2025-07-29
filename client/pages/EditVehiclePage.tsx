@@ -77,6 +77,7 @@ const EditVehiclePage = () => {
     image: '',
     features: [],
     isVisible: true,
+    isFeatured: false,
     condition: 'Usado',
     priceType: 'Contado',
     vehicleType: 'Sedan'
