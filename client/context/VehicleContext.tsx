@@ -55,6 +55,19 @@ export const VehicleProvider: React.FC<VehicleProviderProps> = ({
     if (filters.vehicleType && vehicle.vehicleType !== filters.vehicleType) {
       return false;
     }
+    if (filters.searchText) {
+      const searchLower = filters.searchText.toLowerCase();
+      const matchesMake = vehicle.make.toLowerCase().includes(searchLower);
+      const matchesModel = vehicle.model.toLowerCase().includes(searchLower);
+      const matchesDescription = vehicle.description.toLowerCase().includes(searchLower);
+      const matchesFeatures = vehicle.features.some(feature =>
+        feature.toLowerCase().includes(searchLower)
+      );
+
+      if (!matchesMake && !matchesModel && !matchesDescription && !matchesFeatures) {
+        return false;
+      }
+    }
     if (filters.priceRange) {
       const [min, max] = filters.priceRange;
       if (vehicle.price < min || vehicle.price > max) {
