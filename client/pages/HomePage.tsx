@@ -250,9 +250,11 @@ const HomePage = () => {
               financiamiento, o solo a calcularte cuanto quedaria tu cuota,
               tenemos contactos con diferentes entidades financieras.
             </p>
-            <button className="bg-blue-600 text-white px-8 py-3 rounded-lg hover:bg-blue-700 transition-colors">
-              CALCULAR
-            </button>
+            <Link to="/calcular-cuotas">
+              <button className="bg-blue-600 text-white px-8 py-3 rounded-lg hover:bg-blue-700 transition-colors">
+                CALCULAR
+              </button>
+            </Link>
           </div>
         </div>
       </section>
