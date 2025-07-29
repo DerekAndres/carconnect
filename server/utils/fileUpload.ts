@@ -1,23 +1,28 @@
-import multer from 'multer';
-import path from 'path';
-import fs from 'fs';
-import sharp from 'sharp';
-import { v4 as uuidv4 } from 'uuid';
+import multer from "multer";
+import path from "path";
+import fs from "fs";
+import sharp from "sharp";
+import { v4 as uuidv4 } from "uuid";
 
 // Allowed file types
-const ALLOWED_IMAGE_TYPES = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'];
+const ALLOWED_IMAGE_TYPES = [
+  "image/jpeg",
+  "image/jpg",
+  "image/png",
+  "image/webp",
+];
 const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB
 
 // Upload directories
-const UPLOAD_DIR = path.join(process.cwd(), 'public', 'uploads');
-const VEHICLES_DIR = path.join(UPLOAD_DIR, 'vehicles');
-const THUMBNAILS_DIR = path.join(UPLOAD_DIR, 'thumbnails');
+const UPLOAD_DIR = path.join(process.cwd(), "public", "uploads");
+const VEHICLES_DIR = path.join(UPLOAD_DIR, "vehicles");
+const THUMBNAILS_DIR = path.join(UPLOAD_DIR, "thumbnails");
 
 // Ensure upload directories exist
 export const ensureUploadDirectories = (): void => {
   const dirs = [UPLOAD_DIR, VEHICLES_DIR, THUMBNAILS_DIR];
-  
-  dirs.forEach(dir => {
+
+  dirs.forEach((dir) => {
     if (!fs.existsSync(dir)) {
       fs.mkdirSync(dir, { recursive: true });
       console.log(`Created directory: ${dir}`);
@@ -30,10 +35,10 @@ export const cleanFilename = (filename: string): string => {
   // Remove special characters and spaces, keep only alphanumeric and dots
   const cleaned = filename
     .toLowerCase()
-    .replace(/[^a-z0-9.]/g, '_')
-    .replace(/_+/g, '_')
-    .replace(/^_|_$/g, '');
-  
+    .replace(/[^a-z0-9.]/g, "_")
+    .replace(/_+/g, "_")
+    .replace(/^_|_$/g, "");
+
   // Add UUID to prevent conflicts
   const ext = path.extname(cleaned);
   const name = path.basename(cleaned, ext);
@@ -66,15 +71,23 @@ const storage = multer.diskStorage({
   filename: (req, file, cb) => {
     const cleanName = cleanFilename(file.originalname);
     cb(null, cleanName);
-  }
+  },
 });
 
 // Multer file filter
-const fileFilter = (req: any, file: Express.Multer.File, cb: multer.FileFilterCallback) => {
+const fileFilter = (
+  req: any,
+  file: Express.Multer.File,
+  cb: multer.FileFilterCallback,
+) => {
   if (validateFileType(file)) {
     cb(null, true);
   } else {
-    cb(new Error(`Invalid file type. Allowed types: ${ALLOWED_IMAGE_TYPES.join(', ')}`));
+    cb(
+      new Error(
+        `Invalid file type. Allowed types: ${ALLOWED_IMAGE_TYPES.join(", ")}`,
+      ),
+    );
   }
 };
 
@@ -84,8 +97,8 @@ export const upload = multer({
   fileFilter,
   limits: {
     fileSize: MAX_FILE_SIZE,
-    files: 10 // Maximum 10 files per upload
-  }
+    files: 10, // Maximum 10 files per upload
+  },
 });
 
 // Resize and optimize image
@@ -96,34 +109,29 @@ export const processImage = async (
     width?: number;
     height?: number;
     quality?: number;
-    format?: 'jpeg' | 'png' | 'webp';
-  } = {}
+    format?: "jpeg" | "png" | "webp";
+  } = {},
 ): Promise<void> => {
-  const {
-    width = 1200,
-    height = 800,
-    quality = 80,
-    format = 'jpeg'
-  } = options;
+  const { width = 1200, height = 800, quality = 80, format = "jpeg" } = options;
 
   try {
     await sharp(inputPath)
       .resize(width, height, {
-        fit: 'inside',
-        withoutEnlargement: true
+        fit: "inside",
+        withoutEnlargement: true,
       })
       .toFormat(format, { quality })
       .toFile(outputPath);
   } catch (error) {
-    console.error('Error processing image:', error);
-    throw new Error('Image processing failed');
+    console.error("Error processing image:", error);
+    throw new Error("Image processing failed");
   }
 };
 
 // Create thumbnail
 export const createThumbnail = async (
   inputPath: string,
-  filename: string
+  filename: string,
 ): Promise<string> => {
   const ext = path.extname(filename);
   const name = path.basename(filename, ext);
@@ -133,16 +141,16 @@ export const createThumbnail = async (
   try {
     await sharp(inputPath)
       .resize(300, 200, {
-        fit: 'cover',
-        position: 'center'
+        fit: "cover",
+        position: "center",
       })
       .jpeg({ quality: 70 })
       .toFile(thumbnailPath);
-    
+
     return thumbnailName;
   } catch (error) {
-    console.error('Error creating thumbnail:', error);
-    throw new Error('Thumbnail creation failed');
+    console.error("Error creating thumbnail:", error);
+    throw new Error("Thumbnail creation failed");
   }
 };
 
@@ -158,43 +166,47 @@ export const deleteFiles = async (filename: string): Promise<void> => {
     if (fs.existsSync(filePath)) {
       fs.unlinkSync(filePath);
     }
-    
+
     // Delete thumbnail
     if (fs.existsSync(thumbnailPath)) {
       fs.unlinkSync(thumbnailPath);
     }
   } catch (error) {
-    console.error('Error deleting files:', error);
-    throw new Error('File deletion failed');
+    console.error("Error deleting files:", error);
+    throw new Error("File deletion failed");
   }
 };
 
 // Get file info
-export const getFileInfo = (filename: string): {
+export const getFileInfo = (
+  filename: string,
+): {
   exists: boolean;
   size?: number;
   path?: string;
 } => {
   const filePath = path.join(VEHICLES_DIR, filename);
-  
+
   try {
     if (fs.existsSync(filePath)) {
       const stats = fs.statSync(filePath);
       return {
         exists: true,
         size: stats.size,
-        path: filePath
+        path: filePath,
       };
     }
   } catch (error) {
-    console.error('Error getting file info:', error);
+    console.error("Error getting file info:", error);
   }
-  
+
   return { exists: false };
 };
 
 // Process uploaded file
-export const processUploadedFile = async (file: Express.Multer.File): Promise<{
+export const processUploadedFile = async (
+  file: Express.Multer.File,
+): Promise<{
   filename: string;
   originalName: string;
   url: string;
@@ -206,11 +218,11 @@ export const processUploadedFile = async (file: Express.Multer.File): Promise<{
   try {
     // Create thumbnail
     const thumbnailName = await createThumbnail(filePath, filename);
-    
+
     // Optimize main image (optional)
     const optimizedPath = path.join(VEHICLES_DIR, `opt_${filename}`);
     await processImage(filePath, optimizedPath);
-    
+
     // Replace original with optimized version
     fs.unlinkSync(filePath);
     fs.renameSync(optimizedPath, filePath);
@@ -220,7 +232,7 @@ export const processUploadedFile = async (file: Express.Multer.File): Promise<{
       originalName: originalname,
       url: generateFileUrl(filename),
       thumbnailUrl: generateThumbnailUrl(filename),
-      size
+      size,
     };
   } catch (error) {
     // Clean up on error
@@ -229,11 +241,17 @@ export const processUploadedFile = async (file: Express.Multer.File): Promise<{
         fs.unlinkSync(filePath);
       }
     } catch (cleanupError) {
-      console.error('Error during cleanup:', cleanupError);
+      console.error("Error during cleanup:", cleanupError);
     }
-    
+
     throw error;
   }
 };
 
-export { VEHICLES_DIR, THUMBNAILS_DIR, UPLOAD_DIR, ALLOWED_IMAGE_TYPES, MAX_FILE_SIZE };
+export {
+  VEHICLES_DIR,
+  THUMBNAILS_DIR,
+  UPLOAD_DIR,
+  ALLOWED_IMAGE_TYPES,
+  MAX_FILE_SIZE,
+};
