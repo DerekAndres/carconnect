@@ -6,7 +6,7 @@ import SearchFilterBar from "../components/SearchFilterBar";
 import Navbar from "../components/Navbar";
 
 const CatalogPage = () => {
-  const { vehicles, setFilters } = useVehicles();
+  const { vehicles, filters, setFilters } = useVehicles();
   const [searchParams] = useSearchParams();
   const [showingCount, setShowingCount] = useState(8);
 
