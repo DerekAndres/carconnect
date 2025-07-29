@@ -602,46 +602,111 @@ const AddVehiclePage = () => {
               </div>
             </div>
 
-            {/* Images Section */}
+            {/* Media Upload Section */}
             <div className="bg-white rounded-lg p-6 shadow-lg">
-              <h2 className="text-xl font-bold text-gray-900 mb-6">Imágenes del Vehículo</h2>
-              
-              <div className="space-y-4">
-                {images.map((image, index) => (
-                  <div key={index} className="flex items-center space-x-3">
-                    <div className="flex-1">
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
-                        {index === 0 ? 'Imagen Principal *' : `Imagen ${index + 1}`}
-                      </label>
-                      <input
-                        type="url"
-                        value={image}
-                        onChange={(e) => handleImageChange(index, e.target.value)}
-                        required={index === 0}
-                        className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                        placeholder="https://ejemplo.com/imagen.jpg"
-                      />
+              <h2 className="text-xl font-bold text-gray-900 mb-6">Imágenes y Videos del Vehículo</h2>
+
+              <div className="space-y-6">
+                {mediaFiles.map((media, index) => (
+                  <div key={index} className="border rounded-lg p-4 bg-gray-50">
+                    <div className="flex items-start space-x-4">
+                      {/* File Upload Area */}
+                      <div className="flex-1">
+                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                          {index === 0 ? '📸 Imagen Principal *' : `📁 Archivo ${index + 1}`}
+                          {media.isPrimary && index > 0 && ' (Principal)'}
+                        </label>
+
+                        <div className="border-2 border-dashed border-gray-300 rounded-lg p-4 text-center hover:border-blue-400 transition-colors">
+                          <input
+                            type="file"
+                            accept="image/*,video/*"
+                            onChange={(e) => handleFileChange(index, e.target.files?.[0] || null)}
+                            className="hidden"
+                            id={`file-${index}`}
+                            required={index === 0}
+                          />
+                          <label htmlFor={`file-${index}`} className="cursor-pointer">
+                            {media.preview ? (
+                              <div className="space-y-2">
+                                {media.type === 'image' ? (
+                                  <img
+                                    src={media.preview}
+                                    alt={`Preview ${index + 1}`}
+                                    className="max-h-32 mx-auto rounded"
+                                  />
+                                ) : (
+                                  <video
+                                    src={media.preview}
+                                    className="max-h-32 mx-auto rounded"
+                                    controls
+                                  />
+                                )}
+                                <p className="text-sm text-gray-600">
+                                  {media.file?.name} ({media.type})
+                                </p>
+                                <p className="text-xs text-blue-600">Clic para cambiar archivo</p>
+                              </div>
+                            ) : (
+                              <div className="py-8">
+                                <Upload className="w-12 h-12 text-gray-400 mx-auto mb-4" />
+                                <p className="text-gray-600">
+                                  Clic para subir imagen o video
+                                </p>
+                                <p className="text-xs text-gray-500 mt-2">
+                                  JPG, PNG, MP4, MOV hasta 10MB
+                                </p>
+                              </div>
+                            )}
+                          </label>
+                        </div>
+                      </div>
+
+                      {/* Actions */}
+                      <div className="flex flex-col space-y-2">
+                        {!media.isPrimary && media.file && (
+                          <button
+                            type="button"
+                            onClick={() => setPrimaryMedia(index)}
+                            className="px-3 py-1 text-xs bg-yellow-100 text-yellow-800 rounded hover:bg-yellow-200 transition-colors"
+                          >
+                            Hacer Principal
+                          </button>
+                        )}
+
+                        {mediaFiles.length > 1 && (
+                          <button
+                            type="button"
+                            onClick={() => removeMediaField(index)}
+                            className="text-red-600 hover:text-red-800 p-1"
+                          >
+                            <X className="w-5 h-5" />
+                          </button>
+                        )}
+                      </div>
                     </div>
-                    {images.length > 1 && (
-                      <button
-                        type="button"
-                        onClick={() => removeImageField(index)}
-                        className="text-red-600 hover:text-red-800 p-2"
-                      >
-                        <X className="w-5 h-5" />
-                      </button>
-                    )}
                   </div>
                 ))}
-                
+
                 <button
                   type="button"
-                  onClick={addImageField}
-                  className="flex items-center space-x-2 text-blue-600 hover:text-blue-800 transition-colors"
+                  onClick={addMediaField}
+                  className="w-full border-2 border-dashed border-gray-300 rounded-lg p-4 text-center hover:border-blue-400 transition-colors"
                 >
-                  <Plus className="w-4 h-4" />
-                  <span>Agregar otra imagen</span>
+                  <Plus className="w-6 h-6 text-gray-400 mx-auto mb-2" />
+                  <span className="text-gray-600">Agregar otra imagen o video</span>
                 </button>
+
+                <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                  <h4 className="font-semibold text-blue-900 mb-2">📋 Información de Archivos:</h4>
+                  <ul className="text-sm text-blue-800 space-y-1">
+                    <li>• La primera imagen será la imagen principal del vehículo</li>
+                    <li>• Puedes cambiar cuál es la imagen principal usando el botón "Hacer Principal"</li>
+                    <li>• Formatos soportados: JPG, PNG para imágenes | MP4, MOV para videos</li>
+                    <li>• Tamaño máximo: 10MB por archivo</li>
+                    <li>• Archivos subidos: {mediaFiles.filter(m => m.file).length}</li>
+                  </ul>
+                </div>
               </div>
             </div>
 
