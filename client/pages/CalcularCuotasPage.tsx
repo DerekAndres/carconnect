@@ -109,7 +109,7 @@ const CalcularCuotasPage = () => {
       {/* Hero Section */}
       <div className="relative bg-gradient-to-r from-purple-600 to-purple-800 text-white">
         <Navbar currentPage="home" />
-        
+
         <div className="container mx-auto px-4 py-20">
           <div className="text-center max-w-4xl mx-auto">
             <h1 className="text-5xl font-bold mb-6">
@@ -118,20 +118,6 @@ const CalcularCuotasPage = () => {
             <p className="text-xl mb-8">
               Calcula cuánto pagarías mensualmente por tu vehículo ideal
             </p>
-            <div className="flex flex-wrap justify-center gap-4">
-              <Link to="/financiamiento">
-                <Button size="lg" variant="secondary" className="bg-white text-purple-600 hover:bg-gray-100">
-                  <DollarSign className="w-5 h-5 mr-2" />
-                  Financiamiento
-                </Button>
-              </Link>
-              <Link to="/avaluo">
-                <Button size="lg" variant="outline" className="border-white text-white hover:bg-white hover:text-purple-600">
-                  <TrendingUp className="w-5 h-5 mr-2" />
-                  Avalúa tu Auto
-                </Button>
-              </Link>
-            </div>
           </div>
         </div>
       </div>
