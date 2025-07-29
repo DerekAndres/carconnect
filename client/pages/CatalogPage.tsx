@@ -6,14 +6,14 @@ import SearchFilterBar from "../components/SearchFilterBar";
 import Navbar from "../components/Navbar";
 
 const CatalogPage = () => {
-  const { vehicles, filters, setFilters } = useVehicles();
+  const { vehicles, filters, filteredVehicles: globalFilteredVehicles, setFilters } = useVehicles();
   const [searchParams] = useSearchParams();
   const [showingCount, setShowingCount] = useState(8);
 
   const vehicleTypeFilter = searchParams.get('type') as 'SUV' | 'Sedan' | 'Pickup' | null;
 
-  // Filter vehicles based on URL params and visibility
-  const filteredVehicles = vehicles.filter((v) => {
+  // Use global filtered vehicles and also filter by visibility and URL params
+  const filteredVehicles = globalFilteredVehicles.filter((v) => {
     if (!v.isVisible) return false;
     if (vehicleTypeFilter && v.vehicleType !== vehicleTypeFilter) return false;
     return true;
