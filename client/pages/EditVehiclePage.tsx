@@ -120,10 +120,19 @@ const EditVehiclePage = () => {
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { name, value, type } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: type === 'number' ? (value === '' ? '' : parseFloat(value)) : value
-    }));
+
+    // Special handling for price and mileage to preserve full numbers
+    if (name === 'price' || name === 'mileage') {
+      setFormData(prev => ({
+        ...prev,
+        [name]: value // Keep as string until form submission
+      }));
+    } else {
+      setFormData(prev => ({
+        ...prev,
+        [name]: type === 'number' ? (value === '' ? '' : parseFloat(value)) : value
+      }));
+    }
   };
 
   const handleFeatureToggle = (feature: string) => {
