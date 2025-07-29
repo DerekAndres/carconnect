@@ -33,10 +33,38 @@ const CatalogPage = () => {
   };
 
   const getHeaderText = () => {
+    const hasFilters = vehicleTypeFilter ||
+                      filters.searchText ||
+                      filters.make ||
+                      filters.model ||
+                      filters.year ||
+                      filters.condition;
+
     if (vehicleTypeFilter) {
       return `Mostrando: ${vehicleTypeFilter}s`;
     }
+    if (filters.searchText) {
+      return `Resultados para: "${filters.searchText}"`;
+    }
+    if (filters.make || filters.model) {
+      return `Mostrando: ${filters.make || ''} ${filters.model || ''}`.trim();
+    }
     return 'Mostrando: Todos';
+  };
+
+  const hasActiveFilters = () => {
+    return vehicleTypeFilter ||
+           filters.searchText ||
+           filters.make ||
+           filters.model ||
+           filters.year ||
+           filters.condition;
+  };
+
+  const clearAllFilters = () => {
+    setFilters({});
+    // Also clear URL params
+    window.history.pushState({}, '', '/catalog');
   };
 
   return (
