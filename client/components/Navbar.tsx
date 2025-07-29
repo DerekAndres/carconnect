@@ -45,10 +45,13 @@ const Navbar: React.FC<NavbarProps> = ({ currentPage = "home" }) => {
           Agregar Vehiculo
         </Link>
         <Link to="/avaluo" className="hover:text-blue-400 transition-colors">
-          Avaluo de tu Auto
+          Avalúa tu Auto
         </Link>
         <Link to="/financiamiento" className="hover:text-blue-400 transition-colors">
           Financiamiento
+        </Link>
+        <Link to="/calcular-cuotas" className="hover:text-blue-400 transition-colors">
+          Calculadora de Cuotas
         </Link>
       </div>
 
