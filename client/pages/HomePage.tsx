@@ -22,8 +22,8 @@ const HomePage = () => {
     estado: "",
   });
 
-  // Get featured vehicles (first 4 visible vehicles)
-  const featuredVehiclesData = vehicles.filter(v => v.isVisible).slice(0, 4);
+  // Get featured vehicles (vehicles marked as featured and visible)
+  const featuredVehiclesData = vehicles.filter(v => v.isVisible && v.isFeatured).slice(0, 4);
 
   const featuredVehicles = [
     {
