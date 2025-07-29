@@ -327,9 +327,11 @@ const HomePage = () => {
             el auto de tus sueños está más cerca de lo que piensas...
           </p>
 
-          <button className="bg-blue-600 text-white px-8 py-4 rounded-lg hover:bg-blue-700 transition-colors font-medium">
-            IR A CALCULADORA
-          </button>
+          <Link to="/calcular-cuotas">
+            <button className="bg-blue-600 text-white px-8 py-4 rounded-lg hover:bg-blue-700 transition-colors font-medium">
+              IR A CALCULADORA
+            </button>
+          </Link>
         </div>
       </section>
 
