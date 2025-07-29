@@ -221,7 +221,7 @@ const HomePage = () => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-7xl mx-auto">
-          {featuredVehicles.map((vehicle) => (
+          {featuredVehiclesData.map((vehicle) => (
             <div
               key={vehicle.id}
               className="bg-white rounded-lg shadow-lg overflow-hidden group hover:shadow-xl transition-shadow"
@@ -229,7 +229,7 @@ const HomePage = () => {
               <div className="relative">
                 <img
                   src={vehicle.image}
-                  alt={vehicle.name}
+                  alt={`${vehicle.make} ${vehicle.model}`}
                   className="w-full h-48 object-cover"
                 />
                 <div className="absolute top-4 right-4 bg-green-500 text-white px-2 py-1 rounded text-sm">
@@ -238,26 +238,29 @@ const HomePage = () => {
               </div>
 
               <div className="p-6">
-                <h3 className="text-xl font-bold mb-2">{vehicle.name}</h3>
+                <h3 className="text-xl font-bold mb-2">{vehicle.make} {vehicle.model} {vehicle.year}</h3>
                 <p className="text-gray-600 text-sm mb-4">
                   {vehicle.description}
                 </p>
 
                 <div className="flex items-center justify-between text-sm text-gray-500 mb-4">
-                  {vehicle.details.map((detail, index) => (
-                    <span key={index}>{detail}</span>
-                  ))}
+                  <span>{vehicle.mileage} millas</span>
+                  <span>{vehicle.fuelType}</span>
+                  <span>{vehicle.transmission}</span>
                 </div>
 
                 <hr className="mb-4" />
 
                 <div className="flex items-center justify-between">
                   <span className="text-2xl font-bold text-green-600">
-                    {vehicle.price}
+                    L. {vehicle.price.toLocaleString()}
                   </span>
-                  <button className="text-blue-600 hover:text-blue-800 font-medium">
-                    view details
-                  </button>
+                  <Link
+                    to={`/vehicle/${vehicle.id}`}
+                    className="text-blue-600 hover:text-blue-800 font-medium"
+                  >
+                    Ver detalles
+                  </Link>
                 </div>
               </div>
             </div>
