@@ -71,15 +71,23 @@ const SearchFilterBar: React.FC<SearchFilterBarProps> = ({ redirectToCatalog = f
   useEffect(() => {
     const timeoutId = setTimeout(() => {
       if (searchText !== (filters.searchText || '')) {
-        setFilters({
+        const newFilters = {
           vehicleType: filters.vehicleType, // Keep vehicle type filter
           searchText: searchText.trim() || undefined
-        });
+        };
+        setFilters(newFilters);
+
+        // If we're on homepage and there's search text, redirect to catalog
+        if ((location.pathname === '/' || redirectToCatalog) && searchText.trim()) {
+          setTimeout(() => {
+            navigate('/catalog');
+          }, 100);
+        }
       }
     }, 500);
 
     return () => clearTimeout(timeoutId);
-  }, [searchText]);
+  }, [searchText, location.pathname, redirectToCatalog, navigate]);
 
   return (
     <div className="bg-white/10 backdrop-blur-sm rounded-lg border-2 border-white p-6">
