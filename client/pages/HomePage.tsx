@@ -8,6 +8,7 @@ import {
   X,
 } from "lucide-react";
 import { useState } from "react";
+import { useVehicles } from "../context/VehicleContext";
 import Navbar from "../components/Navbar";
 
 const HomePage = () => {
