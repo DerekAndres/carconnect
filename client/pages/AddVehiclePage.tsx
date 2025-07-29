@@ -211,16 +211,26 @@ const AddVehiclePage = () => {
       feature => selectedFeatures[feature]
     );
 
+    // Validate that at least one image is uploaded
+    const hasValidMedia = mediaFiles.some(media => media.file !== null);
+    if (!hasValidMedia) {
+      alert('Por favor sube al menos una imagen del vehículo');
+      return;
+    }
+
     const vehicleData = {
       ...formData,
       features: selectedFeaturesList,
-      image: images[0] || formData.image,
+      image: formData.image, // This will be updated with uploaded file path
+      mediaFiles: mediaFiles.filter(media => media.file !== null), // Include files for upload
       // Convert strings back to numbers for numeric fields, preserving full values
       price: typeof formData.price === 'string' ? (formData.price === '' ? 0 : parseFloat(formData.price.replace(/,/g, ''))) : formData.price,
       mileage: typeof formData.mileage === 'string' ? (formData.mileage === '' ? 0 : parseFloat(formData.mileage.replace(/,/g, ''))) : formData.mileage,
       year: typeof formData.year === 'string' ? parseInt(formData.year) || new Date().getFullYear() : formData.year
     };
 
+    // TODO: Here you would upload files to server and get file paths
+    // For now, we'll simulate this with the preview URLs
     addVehicle(vehicleData);
     navigate('/catalog');
   };
