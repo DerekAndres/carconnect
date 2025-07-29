@@ -29,14 +29,24 @@ const SearchFilterBar: React.FC<SearchFilterBarProps> = ({ redirectToCatalog = f
   const availableYears = Array.from(new Set(vehicles.map(v => v.year))).sort((a, b) => b - a);
 
   const handleSearch = () => {
-    setFilters({
+    const newFilters = {
       ...filters,
       searchText: searchText.trim() || undefined,
       make: selectedMake || undefined,
       model: selectedModel || undefined,
       year: selectedYear ? parseInt(selectedYear) : undefined,
       condition: selectedCondition || undefined
-    });
+    };
+
+    setFilters(newFilters);
+
+    // If we're on homepage, redirect to catalog after setting filters
+    if (location.pathname === '/' || redirectToCatalog) {
+      // Use a small delay to ensure filters are set before navigation
+      setTimeout(() => {
+        navigate('/catalog');
+      }, 100);
+    }
   };
 
   const handleClear = () => {
