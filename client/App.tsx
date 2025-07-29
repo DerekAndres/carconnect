@@ -12,6 +12,9 @@ import CatalogEditPage from "./pages/CatalogEditPage";
 import VehicleDetailsPage from "./pages/VehicleDetailsPage";
 import AddVehiclePage from "./pages/AddVehiclePage";
 import EditVehiclePage from "./pages/EditVehiclePage";
+import FinanciamientoPage from "./pages/FinanciamientoPage";
+import AvaluoPage from "./pages/AvaluoPage";
+import CalcularCuotasPage from "./pages/CalcularCuotasPage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
