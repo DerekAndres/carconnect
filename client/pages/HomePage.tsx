@@ -10,7 +10,7 @@ import {
 import { useState } from "react";
 import { useVehicles } from "../context/VehicleContext";
 import Navbar from "../components/Navbar";
-import HomeSearchBar from "../components/HomeSearchBar";
+import SearchFilterBar from "../components/SearchFilterBar";
 
 const HomePage = () => {
   const { vehicles } = useVehicles();
