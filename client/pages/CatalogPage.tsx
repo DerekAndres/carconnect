@@ -90,14 +90,21 @@ const CatalogPage = () => {
         <div className="max-w-7xl mx-auto">
           {/* Header */}
           <div className="mb-8 flex items-center justify-between">
-            <span className="text-2xl font-medium">{getHeaderText()}</span>
-            {vehicleTypeFilter && (
-              <Link
-                to="/catalog"
+            <div>
+              <span className="text-2xl font-medium">{getHeaderText()}</span>
+              {hasActiveFilters() && (
+                <div className="mt-2 text-sm text-gray-600">
+                  {filteredVehicles.length} vehículo{filteredVehicles.length !== 1 ? 's' : ''} encontrado{filteredVehicles.length !== 1 ? 's' : ''}
+                </div>
+              )}
+            </div>
+            {hasActiveFilters() && (
+              <button
+                onClick={clearAllFilters}
                 className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors"
               >
                 Ver Todos los Vehículos
-              </Link>
+              </button>
             )}
           </div>
 
