@@ -479,7 +479,7 @@ const AvaluoPage = () => {
                       />
                       <Button
                         type="button"
-                        variant="outline"
+                        className="border border-gray-300"
                         onClick={() =>
                           document.getElementById("images")?.click()
                         }
@@ -592,7 +592,6 @@ const AvaluoPage = () => {
                 <div className="text-center">
                   <Button
                     type="submit"
-                    size="lg"
                     className="bg-green-600 hover:bg-green-700 px-12"
                   >
                     Solicitar Avalúo Gratuito
